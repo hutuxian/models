@@ -41,10 +41,14 @@ class Data():
 
         items, adj_in, adj_out, seq_index, last_index = [], [], [], [], []
         mask, label = [], []
+        pos = []
 
         id = 0
         for e in cur_batch:
             node = np.unique(e[0])
+            #slen = len(e[0])
+            slen = last_id[id]+1
+            pos.append([i for i in range(slen-1, -1, -1)] + [0] * (max_seq_len - slen))
             items.append(node.tolist() + (max_uniq_len - len(node)) * [0])
             adj = np.zeros((max_uniq_len, max_uniq_len))
 
@@ -73,6 +77,7 @@ class Data():
             id += 1
 
         items = np.array(items).astype("int64").reshape((batch_size, -1))
+        pos = np.array(pos).astype("int64").reshape((batch_size, -1, 1))
         seq_index = np.array(seq_index).astype("int32").reshape(
             (batch_size, -1, 2))
         last_index = np.array(last_index).astype("int32").reshape(
@@ -83,7 +88,7 @@ class Data():
             (batch_size, max_uniq_len, max_uniq_len))
         mask = np.array(mask).astype("float32").reshape((batch_size, -1, 1))
         label = np.array(label).astype("int64").reshape((batch_size, 1))
-        return zip(items, seq_index, last_index, adj_in, adj_out, mask, label)
+        return zip(items, pos, seq_index, last_index, adj_in, adj_out, mask, label)
 
     def reader(self, batch_size, batch_group_size, train=True):
         def _reader():

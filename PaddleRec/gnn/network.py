@@ -26,6 +26,10 @@ def network(items_num, hidden_size, step, bs):
         name="items",
         shape=[bs, -1],
         dtype="int64") #[batch_size, uniq_max]
+    pos = layers.data(
+        name="pos",
+        shape=[1, 1],
+        dtype="int64") #[batch_size, uniq_max, 1]
     seq_index = fluid.data(
         name="seq_index",
         shape=[bs, -1, 2],
@@ -51,11 +55,11 @@ def network(items_num, hidden_size, step, bs):
         shape=[bs, 1],
         dtype="int64") #[batch_size, 1]
 
-    datas = [items, seq_index, last_index, adj_in, adj_out, mask, label]
+    datas = [items, pos, seq_index, last_index, adj_in, adj_out, mask, label]
     py_reader = fluid.layers.create_py_reader_by_data(
                     capacity=256, feed_list=datas, name='py_reader', use_double_buffer=True)
     feed_datas = fluid.layers.read_file(py_reader)
-    items, seq_index, last_index, adj_in, adj_out, mask, label = feed_datas
+    items, pos, seq_index, last_index, adj_in, adj_out, mask, label = feed_datas
 
     items_emb = fluid.embedding(
         input=items,
@@ -64,6 +68,13 @@ def network(items_num, hidden_size, step, bs):
             initializer=fluid.initializer.Uniform(
                 low=-stdv, high=stdv)),
         size=[items_num, hidden_size])  #[batch_size, uniq_max, h]
+    pos_emb = layers.embedding(
+        input=pos,
+        param_attr=fluid.ParamAttr(
+            name="pos_emb",
+            initializer=fluid.initializer.Uniform(
+                low=-stdv, high=stdv)),
+        size=[1000, hidden_size])  #[batch_size, uniq_max, h]
 
     pre_state = items_emb
     for i in range(step):
@@ -109,6 +120,7 @@ def network(items_num, hidden_size, step, bs):
     seq = layers.gather_nd(final_state, seq_index)
     last = layers.gather_nd(final_state, last_index)
 
+    seq += pos_emb
     seq_fc = layers.fc(
         input=seq,
         name="seq_fc",
