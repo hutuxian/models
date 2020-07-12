@@ -1,4 +1,3 @@
-#  Copyright (c) 2019 PaddlePaddle Authors. All Rights Reserve.
 #
 #Licensed under the Apache License, Version 2.0 (the "License");
 #you may not use this file except in compliance with the License.
@@ -19,13 +18,47 @@ import paddle.fluid as fluid
 import paddle.fluid.layers as layers
 
 
-def network(items_num, hidden_size, step, bs):
+def attention(state, adj, adj_mask, bs, h, max_uniq_len, fcname):
+    """
+    state: [bs, uni, h]
+    adj: [bs, uni, uni]
+    """
+    stdv = 1.0 / h
+    part1 = layers.reshape(layers.expand(state, [1, 1, max_uniq_len]), [-1, max_uniq_len * max_uniq_len, h])
+    part2 = layers.expand(state, [1, max_uniq_len, 1])
+    inp = layers.reshape(layers.concat([part1, part2], axis=2), [-1, max_uniq_len, max_uniq_len, 2 * h]) #[bs, max_uniq_len, max_uniq_len, 2h]
+    fc = layers.fc(input=inp, name=fcname, size=1, act='leaky_relu', num_flatten_dims=3,
+            param_attr=fluid.ParamAttr(initializer=fluid.initializer.Uniform(low=-stdv, high=stdv)), 
+            bias_attr=fluid.ParamAttr(initializer=fluid.initializer.Uniform(low=-stdv, high=stdv)))
+    fc = layers.squeeze(fc, [])
+    print(part1)
+    print(part2)
+    print(input)
+    print(fc)
+    print(adj)
+    weight = layers.elementwise_mul(fc, adj)
+    weight = layers.elementwise_add(fc, adj_mask)
+    weight = layers.softmax(weight, axis = -1)
+    # layers.Print(weight, message="weight", summarize=-1)
+    # weight = layers.dropout(weight, 0.6, is_test=True, dropout_implementation='upscale_in_train')
+    ret_state = layers.matmul(weight, state) 
+
+    print(weight)
+    print(ret_state)
+    return ret_state
+
+
+def network(items_num, hidden_size, step, bs, max_uniq_len=70, attdim=8):
     stdv = 1.0 / math.sqrt(hidden_size)
 
     items = fluid.data(
         name="items",
-        shape=[bs, -1],
+        shape=[bs, max_uniq_len],
         dtype="int64") #[batch_size, uniq_max]
+    pos = fluid.data(
+        name="pos",
+        shape=[bs, -1],
+        dtype="int64") #[batch_size, uniq_max, 1]
     seq_index = fluid.data(
         name="seq_index",
         shape=[bs, -1, 2],
@@ -36,11 +69,19 @@ def network(items_num, hidden_size, step, bs):
         dtype="int32") #[batch_size, 2]
     adj_in = fluid.data(
         name="adj_in",
-        shape=[bs, -1, -1],
+        shape=[bs, max_uniq_len, max_uniq_len],
         dtype="float32") #[batch_size, seq_max, seq_max]
     adj_out = fluid.data(
         name="adj_out",
-        shape=[bs, -1, -1],
+        shape=[bs, max_uniq_len, max_uniq_len],
+        dtype="float32") #[batch_size, seq_max, seq_max]
+    adj_in_mask = fluid.data(
+        name="adj_in_mask",
+        shape=[bs, max_uniq_len, max_uniq_len],
+        dtype="float32") #[batch_size, seq_max, seq_max]
+    adj_out_mask = fluid.data(
+        name="adj_out_mask",
+        shape=[bs, max_uniq_len, max_uniq_len],
         dtype="float32") #[batch_size, seq_max, seq_max]
     mask = fluid.data(
         name="mask",
@@ -51,47 +92,66 @@ def network(items_num, hidden_size, step, bs):
         shape=[bs, 1],
         dtype="int64") #[batch_size, 1]
 
-    datas = [items, seq_index, last_index, adj_in, adj_out, mask, label]
+    datas = [items, pos, seq_index, last_index, adj_in, adj_out, adj_in_mask, adj_out_mask, mask, label]
     py_reader = fluid.io.DataLoader.from_generator(capacity=256, feed_list=datas, iterable=False)
     feed_datas = datas
 
     items_emb = fluid.embedding(
         input=items,
+        padding_idx=0,
         param_attr=fluid.ParamAttr(
             name="emb",
             initializer=fluid.initializer.Uniform(
                 low=-stdv, high=stdv)),
         size=[items_num, hidden_size])  #[batch_size, uniq_max, h]
+    pos_emb = fluid.embedding(
+        input=pos,
+        param_attr=fluid.ParamAttr(
+            name="pos_emb",
+            initializer=fluid.initializer.Uniform(
+                low=-stdv, high=stdv)),
+        size=[1000, hidden_size])  #[batch_size, uniq_max, h]
 
     pre_state = items_emb
+    state_list = []
+    atten_h = 8
     for i in range(step):
-        pre_state = layers.reshape(x=pre_state, shape=[bs, -1, hidden_size])
-        state_in = layers.fc(
-            input=pre_state,
-            name="state_in",
-            size=hidden_size,
-            act=None,
-            num_flatten_dims=2,
-            param_attr=fluid.ParamAttr(initializer=fluid.initializer.Uniform(
-                low=-stdv, high=stdv)),
-            bias_attr=fluid.ParamAttr(initializer=fluid.initializer.Uniform(
-                low=-stdv, high=stdv)))  #[batch_size, uniq_max, h]
-        state_out = layers.fc(
-            input=pre_state,
-            name="state_out",
-            size=hidden_size,
-            act=None,
-            num_flatten_dims=2,
-            param_attr=fluid.ParamAttr(initializer=fluid.initializer.Uniform(
-                low=-stdv, high=stdv)),
-            bias_attr=fluid.ParamAttr(initializer=fluid.initializer.Uniform(
-                low=-stdv, high=stdv)))  #[batch_size, uniq_max, h]
+        for j in range(8): # nheads
+            state_input = layers.reshape(x=pre_state, shape=[bs, -1, hidden_size])
+            state_in = layers.fc(
+                input=state_input,
+                name="state_in"+str(j),
+                size=atten_h,
+                act=None,
+                num_flatten_dims=2,
+                param_attr=fluid.ParamAttr(initializer=fluid.initializer.Uniform(
+                    low=-stdv, high=stdv)),
+                bias_attr=fluid.ParamAttr(initializer=fluid.initializer.Uniform(
+                    low=-stdv, high=stdv)))  #[batch_size, uniq_max, h]
+            state_out = layers.fc(
+                input=state_input,
+                name="state_out"+str(j),
+                size=atten_h,
+                act=None,
+                num_flatten_dims=2,
+                param_attr=fluid.ParamAttr(initializer=fluid.initializer.Uniform(
+                    low=-stdv, high=stdv)),
+                bias_attr=fluid.ParamAttr(initializer=fluid.initializer.Uniform(
+                    low=-stdv, high=stdv)))  #[batch_size, uniq_max, h]
+            
+            att_in = attention(state_in, adj_in, adj_in_mask, bs, atten_h, max_uniq_len, "fc_att_in"+str(j)) #[batch_size, uniq_max, h]
+            att_out = attention(state_out, adj_out, adj_out_mask, bs, atten_h, max_uniq_len, "fc_att_out"+str(j))
+            concat_att = layers.concat([att_in, att_out], axis=2)
+            print("concat_att: ", concat_att)
+            # state_output = layers.fc(concat_att, name="att_out", size=hidden_size, num_flatten_dims=2)
+            state_list.append(concat_att)
 
-        state_adj_in = layers.matmul(adj_in, state_in)  #[batch_size, uniq_max, h]
-        state_adj_out = layers.matmul(adj_out, state_out)   #[batch_size, uniq_max, h]
-
-        gru_input = layers.concat([state_adj_in, state_adj_out], axis=2)
-
+            # state_adj_in = layers.matmul(adj_in, state_in)  #[batch_size, uniq_max, h]
+            # state_adj_out = layers.matmul(adj_out, state_out)   #[batch_size, uniq_max, h]
+            # gru_input = layers.concat([state_adj_in, state_adj_out], axis=2)
+        state_list_concat = layers.concat(state_list, axis=2)
+        print(state_list_concat)
+        gru_input = layers.fc(state_list_concat, name="att_out", size=hidden_size*2, num_flatten_dims=2)
         gru_input = layers.reshape(x=gru_input, shape=[-1, hidden_size * 2])
         gru_fc = layers.fc(
             input=gru_input,
@@ -102,11 +162,18 @@ def network(items_num, hidden_size, step, bs):
             input=gru_fc,
             hidden=layers.reshape(x=pre_state, shape=[-1, hidden_size]),
             size=3 * hidden_size)
+    # state_list_concat = layers.concat(state_list, axis=2)
+    # print(state_list_concat)
+    # pre_state = layers.fc(input=state_list_concat, name="att_outlist", size=hidden_size, act='elu', num_flatten_dims=2,
+    #     param_attr=fluid.ParamAttr(initializer=fluid.initializer.Uniform(low=-stdv, high=stdv)), 
+    #     bias_attr=fluid.ParamAttr(initializer=fluid.initializer.Uniform(low=-stdv, high=stdv)))
+    # pre_state = layers.dropout(pre_state, 0.6, is_test=True, dropout_implementation='upscale_in_train')
 
     final_state = layers.reshape(pre_state, shape=[bs, -1, hidden_size])
     seq = layers.gather_nd(final_state, seq_index)
     last = layers.gather_nd(final_state, last_index)
 
+    seq += pos_emb
     seq_fc = layers.fc(
         input=seq,
         name="seq_fc",

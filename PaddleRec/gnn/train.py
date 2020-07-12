@@ -37,11 +37,14 @@ def parse_args():
     parser.add_argument(
         '--model_path', type=str, default='./saved_model', help="path of model parameters")
     parser.add_argument(
-        '--epoch_num', type=int, default=30, help='number of epochs to train for')
+        '--epoch_num', type=int, default=15, help='number of epochs to train for')
     parser.add_argument(
         '--batch_size', type=int, default=100, help='input batch size')
     parser.add_argument(
         '--hidden_size', type=int, default=100, help='hidden state size')
+
+    parser.add_argument(
+        '--attdim', type=int, default=8, help='attention dim')
     parser.add_argument(
         '--l2', type=float, default=1e-5, help='l2 penalty')
     parser.add_argument(
@@ -53,7 +56,7 @@ def parse_args():
     parser.add_argument(
         '--lr_dc_step', type=int, default=3, help='the number of steps after which the learning rate decay')
     parser.add_argument(
-        '--use_cuda', type=int, default=0, help='whether to use gpu')
+        '--use_cuda', type=int, default=1, help='whether to use gpu')
     parser.add_argument(
         '--use_parallel', type=int, default=1, help='whether to use parallel executor')
     parser.add_argument(
@@ -72,7 +75,7 @@ def train():
     batch_size = args.batch_size
     items_num = reader.read_config(args.config_path)
     loss, acc, py_reader, feed_datas = network.network(items_num, args.hidden_size,
-                                args.step, batch_size)
+                                args.step, batch_size, 70, args.attdim)
 
     data_reader = reader.Data(args.train_path, True)
     logger.info("load data complete")

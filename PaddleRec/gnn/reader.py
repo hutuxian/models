@@ -35,33 +35,54 @@ class Data():
             last_id.append(len(e[0]) - 1)
             e[0] += [0] * (max_seq_len - len(e[0]))
 
-        max_uniq_len = 0
-        for e in cur_batch:
-            max_uniq_len = max(max_uniq_len, len(np.unique(e[0])))
+        max_uniq_len = 70
+        # for e in cur_batch:
+        #     max_uniq_len = max(max_uniq_len, len(np.unique(e[0])))
 
-        items, adj_in, adj_out, seq_index, last_index = [], [], [], [], []
+        items, adj_in, adj_out, adj_in_mask, adj_out_mask, seq_index, last_index = [], [], [], [], [], [], []
         mask, label = [], []
+        pos = []
 
         id = 0
         for e in cur_batch:
             node = np.unique(e[0])
+
+            slen = last_id[id]+1
+            pos.append([i for i in range(slen-1, -1, -1)] + [0] * (max_seq_len - slen))
+
             items.append(node.tolist() + (max_uniq_len - len(node)) * [0])
             adj = np.zeros((max_uniq_len, max_uniq_len))
-
+            for i in range(max_uniq_len):
+                adj[i][i] = 1
             for i in np.arange(len(e[0]) - 1):
                 if e[0][i + 1] == 0:
                     break
+                dr_rate = random.randint(0, 100)
+                if dr_rate < 0:
+                    continue
                 u = np.where(node == e[0][i])[0][0]
                 v = np.where(node == e[0][i + 1])[0][0]
                 adj[u][v] = 1
-
+                
             u_deg_in = np.sum(adj, 0)
             u_deg_in[np.where(u_deg_in == 0)] = 1
-            adj_in.append(np.divide(adj, u_deg_in).transpose())
+            adj_in_cur = np.divide(adj, u_deg_in).transpose()
+
+            adj_mask_cur = np.zeros((max_uniq_len, max_uniq_len))
+            adj_mask_cur[np.where(adj_in_cur==0)] = -9e15
+            adj_in_cur[np.where(adj_in_cur == 0)] = 1
+            adj_in.append(adj_in_cur)
+            adj_in_mask.append(adj_mask_cur)
 
             u_deg_out = np.sum(adj, 1)
             u_deg_out[np.where(u_deg_out == 0)] = 1
-            adj_out.append(np.divide(adj.transpose(), u_deg_out).transpose())
+            adj_out_cur = np.divide(adj.transpose(), u_deg_out).transpose()
+
+            adj_mask_cur = np.zeros((max_uniq_len, max_uniq_len))
+            adj_mask_cur[np.where(adj_out_cur==0)] = -9e15
+            adj_out_cur[np.where(adj_out_cur == 0)] = 1
+            adj_out.append(adj_out_cur)
+            adj_out_mask.append(adj_mask_cur)
 
             seq_index.append(
                 [[id, np.where(node == i)[0][0]] for i in e[0]])
@@ -72,7 +93,9 @@ class Data():
                          (max_seq_len - last_id[id] - 1)])
             id += 1
 
+
         items = np.array(items).astype("int64").reshape((batch_size, -1))
+        pos = np.array(pos).astype("int64").reshape((batch_size, -1))
         seq_index = np.array(seq_index).astype("int32").reshape(
             (batch_size, -1, 2))
         last_index = np.array(last_index).astype("int32").reshape(
@@ -81,9 +104,13 @@ class Data():
             (batch_size, max_uniq_len, max_uniq_len))
         adj_out = np.array(adj_out).astype("float32").reshape(
             (batch_size, max_uniq_len, max_uniq_len))
+        adj_in_mask = np.array(adj_in_mask).astype("float32").reshape(
+            (batch_size, max_uniq_len, max_uniq_len))
+        adj_out_mask = np.array(adj_out_mask).astype("float32").reshape(
+            (batch_size, max_uniq_len, max_uniq_len))
         mask = np.array(mask).astype("float32").reshape((batch_size, -1, 1))
         label = np.array(label).astype("int64").reshape((batch_size, 1))
-        return zip(items, seq_index, last_index, adj_in, adj_out, mask, label)
+        return zip(items, pos, seq_index, last_index, adj_in, adj_out, adj_in_mask, adj_out_mask, mask, label)
 
     def reader(self, batch_size, batch_group_size, train=True):
         def _reader():

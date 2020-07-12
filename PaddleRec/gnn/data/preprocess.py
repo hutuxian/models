@@ -13,6 +13,7 @@ import pickle
 import operator
 import datetime
 import os
+import numpy as np
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -137,9 +138,11 @@ print("-- Splitting train set and test set @ %ss" % datetime.datetime.now())
 # Choosing item count >=5 gives approximately the same number of items as reported in paper
 item_dict = {}
 
+max_uniq_len = -1
 
 # Convert training sessions to sequences and renumber items to start from 1
 def obtian_tra():
+    global max_uniq_len
     train_ids = []
     train_seqs = []
     train_dates = []
@@ -159,14 +162,17 @@ def obtian_tra():
         train_ids += [s]
         train_dates += [date]
         train_seqs += [outseq]
+        if len(np.unique(outseq)) > max_uniq_len:
+            print("update max_uniq_len from %d to %d" % (max_uniq_len, len(np.unique(outseq))))
+            max_uniq_len = len(np.unique(outseq))
     print(item_ctr)  # 43098, 37484
     with open("./diginetica/config.txt", "w") as fout:
         fout.write(str(item_ctr) + "\n")
     return train_ids, train_dates, train_seqs
 
-
 # Convert test sessions to sequences, ignoring items that do not appear in training set
 def obtian_tes():
+    global max_uniq_len
     test_ids = []
     test_seqs = []
     test_dates = []
@@ -181,12 +187,16 @@ def obtian_tes():
         test_ids += [s]
         test_dates += [date]
         test_seqs += [outseq]
+        if len(np.unique(outseq)) > max_uniq_len:
+            print("update max_uniq_len from %d to %d" % (max_uniq_len, len(np.unique(outseq))))
+            max_uniq_len = len(np.unique(outseq))
     return test_ids, test_dates, test_seqs
 
-
 tra_ids, tra_dates, tra_seqs = obtian_tra()
+
 tes_ids, tes_dates, tes_seqs = obtian_tes()
 
+print("final max_unq_len = %d" % (max_uniq_len))
 
 def process_seqs(iseqs, idates):
     out_seqs = []
