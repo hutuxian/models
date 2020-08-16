@@ -1,0 +1,25 @@
+2020-08-16 09:20:52,346-WARNING: paddle.fluid.layers.create_py_reader_by_data() may be deprecated in the near future. Please use paddle.fluid.io.DataLoader.from_generator() instead.
+2020-08-16 09:20:52,435-WARNING: /home/users/hetianjian/code/models/PaddleRec/gnn/network.py:123
+The behavior of expression A + B has been unified with elementwise_add(X, Y, axis=-1) from Paddle 2.0. If your code works well in the older versions but crashes in this version, try to use elementwise_add(X, Y, axis=0) instead of A + B. This transitional warning will be dropped in the future.
+W0816 09:20:52.451593 32396 device_context.cc:265] Please NOTE: device: 0, CUDA Capability: 70, Driver API Version: 10.2, Runtime API Version: 9.2
+W0816 09:20:52.455355 32396 device_context.cc:273] device: 0, cuDNN Version: 7.4.
+2020-08-16 09:21:03,659-INFO: TEST --> loss: 6.3950, Recall@20: 0.4147
+2020-08-16 09:21:10,644-INFO: TEST --> loss: 5.7799, Recall@20: 0.4692
+2020-08-16 09:21:17,761-INFO: TEST --> loss: 5.5807, Recall@20: 0.4931
+2020-08-16 09:21:24,725-INFO: TEST --> loss: 5.5283, Recall@20: 0.5013
+2020-08-16 09:21:31,744-INFO: TEST --> loss: 5.4887, Recall@20: 0.5074
+2020-08-16 09:21:38,732-INFO: TEST --> loss: 5.5329, Recall@20: 0.5090
+2020-08-16 09:21:45,784-INFO: TEST --> loss: 5.5247, Recall@20: 0.5074
+2020-08-16 09:21:52,816-INFO: TEST --> loss: 5.5790, Recall@20: 0.5049
+2020-08-16 09:21:59,768-INFO: TEST --> loss: 5.5945, Recall@20: 0.5036
+2020-08-16 09:22:06,928-INFO: TEST --> loss: 5.6235, Recall@20: 0.5028
+2020-08-16 09:22:13,889-INFO: TEST --> loss: 5.6291, Recall@20: 0.5021
+2020-08-16 09:22:20,939-INFO: TEST --> loss: 5.6489, Recall@20: 0.5006
+2020-08-16 09:22:27,919-INFO: TEST --> loss: 5.6517, Recall@20: 0.5004
+2020-08-16 09:22:34,879-INFO: TEST --> loss: 5.6631, Recall@20: 0.5002
+2020-08-16 09:22:41,824-INFO: TEST --> loss: 5.6654, Recall@20: 0.4994
+2020-08-16 09:22:49,367-INFO: TEST --> loss: 5.6690, Recall@20: 0.4994
+2020-08-16 09:22:56,385-INFO: TEST --> loss: 5.6703, Recall@20: 0.4992
+2020-08-16 09:23:03,458-INFO: TEST --> loss: 5.6721, Recall@20: 0.4991
+2020-08-16 09:23:10,585-INFO: TEST --> loss: 5.6723, Recall@20: 0.4991
+2020-08-16 09:23:17,586-INFO: TEST --> loss: 5.6734, Recall@20: 0.4991

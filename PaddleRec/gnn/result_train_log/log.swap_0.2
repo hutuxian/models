@@ -1,0 +1,619 @@
+Namespace(batch_size=100, config_path='./data/diginetica_swap/config.txt', enable_ce=False, epoch_num=30, hidden_size=100, l2=1e-05, lr=0.001, lr_dc=0.1, lr_dc_step=3, model_path='./model_swap', step=1, train_path='./data/diginetica_swap/train.txt', use_cuda=1, use_parallel=1)
+2020-08-15 16:19:25,697-WARNING: paddle.fluid.layers.create_py_reader_by_data() may be deprecated in the near future. Please use paddle.fluid.io.DataLoader.from_generator() instead.
+2020-08-15 16:19:25,781-WARNING: /home/users/hetianjian/code/models/PaddleRec/gnn/network.py:123
+The behavior of expression A + B has been unified with elementwise_add(X, Y, axis=-1) from Paddle 2.0. If your code works well in the older versions but crashes in this version, try to use elementwise_add(X, Y, axis=0) instead of A + B. This transitional warning will be dropped in the future.
+2020-08-15 16:19:36,673-INFO: load data complete
+W0815 16:19:36.746794 22999 device_context.cc:265] Please NOTE: device: 0, CUDA Capability: 70, Driver API Version: 10.2, Runtime API Version: 9.2
+W0815 16:19:36.750612 22999 device_context.cc:273] device: 0, cuDNN Version: 7.4.
+2020-08-15 16:19:39,625-INFO: begin train
+2020-08-15 16:19:46,083-INFO: global_step: 500, loss: 10.1966, train_acc: 0.0104
+2020-08-15 16:19:51,122-INFO: global_step: 1000, loss: 9.6962, train_acc: 0.0342
+2020-08-15 16:19:57,158-INFO: global_step: 1500, loss: 8.7459, train_acc: 0.1523
+2020-08-15 16:20:01,797-INFO: global_step: 2000, loss: 7.7596, train_acc: 0.2755
+2020-08-15 16:20:07,934-INFO: global_step: 2500, loss: 7.1216, train_acc: 0.3462
+2020-08-15 16:20:12,634-INFO: global_step: 3000, loss: 6.6767, train_acc: 0.3908
+2020-08-15 16:20:17,235-INFO: global_step: 3500, loss: 6.3797, train_acc: 0.4227
+2020-08-15 16:20:23,362-INFO: global_step: 4000, loss: 6.1596, train_acc: 0.4450
+2020-08-15 16:20:23,465-INFO: model saved in ./model_swap/step_4000
+2020-08-15 16:20:27,965-INFO: global_step: 4500, loss: 5.9774, train_acc: 0.4656
+2020-08-15 16:20:32,626-INFO: global_step: 5000, loss: 5.8431, train_acc: 0.4764
+2020-08-15 16:20:38,750-INFO: global_step: 5500, loss: 5.7496, train_acc: 0.4876
+2020-08-15 16:20:43,329-INFO: global_step: 6000, loss: 5.6517, train_acc: 0.4993
+2020-08-15 16:20:49,552-INFO: global_step: 6500, loss: 5.5788, train_acc: 0.5034
+2020-08-15 16:20:54,169-INFO: global_step: 7000, loss: 5.5165, train_acc: 0.5152
+2020-08-15 16:20:58,793-INFO: global_step: 7500, loss: 5.4277, train_acc: 0.5238
+2020-08-15 16:21:04,936-INFO: global_step: 8000, loss: 5.3840, train_acc: 0.5331
+2020-08-15 16:21:05,023-INFO: model saved in ./model_swap/step_8000
+2020-08-15 16:21:09,573-INFO: global_step: 8500, loss: 5.3372, train_acc: 0.5331
+2020-08-15 16:21:10,773-INFO: epoch loss: 6.6386
+2020-08-15 16:21:16,448-INFO: global_step: 9000, loss: 4.9670, train_acc: 0.5869
+2020-08-15 16:21:21,276-INFO: global_step: 9500, loss: 4.8464, train_acc: 0.6063
+2020-08-15 16:21:26,002-INFO: global_step: 10000, loss: 4.8748, train_acc: 0.6044
+2020-08-15 16:21:32,205-INFO: global_step: 10500, loss: 4.8691, train_acc: 0.6041
+2020-08-15 16:21:36,791-INFO: global_step: 11000, loss: 4.8758, train_acc: 0.6041
+2020-08-15 16:21:41,398-INFO: global_step: 11500, loss: 4.8725, train_acc: 0.6041
+2020-08-15 16:21:47,915-INFO: global_step: 12000, loss: 4.8680, train_acc: 0.6030
+2020-08-15 16:21:48,001-INFO: model saved in ./model_swap/step_12000
+2020-08-15 16:21:52,696-INFO: global_step: 12500, loss: 4.8505, train_acc: 0.6049
+2020-08-15 16:21:58,932-INFO: global_step: 13000, loss: 4.8291, train_acc: 0.6107
+2020-08-15 16:22:03,517-INFO: global_step: 13500, loss: 4.8176, train_acc: 0.6121
+2020-08-15 16:22:08,196-INFO: global_step: 14000, loss: 4.8346, train_acc: 0.6088
+2020-08-15 16:22:14,338-INFO: global_step: 14500, loss: 4.8023, train_acc: 0.6127
+2020-08-15 16:22:18,971-INFO: global_step: 15000, loss: 4.7983, train_acc: 0.6149
+2020-08-15 16:22:23,608-INFO: global_step: 15500, loss: 4.7880, train_acc: 0.6148
+2020-08-15 16:22:29,714-INFO: global_step: 16000, loss: 4.7729, train_acc: 0.6166
+2020-08-15 16:22:29,799-INFO: model saved in ./model_swap/step_16000
+2020-08-15 16:22:34,323-INFO: global_step: 16500, loss: 4.7644, train_acc: 0.6190
+2020-08-15 16:22:40,436-INFO: global_step: 17000, loss: 4.7327, train_acc: 0.6232
+2020-08-15 16:22:42,835-INFO: epoch loss: 4.8234
+2020-08-15 16:22:45,602-INFO: global_step: 17500, loss: 4.5108, train_acc: 0.6598
+2020-08-15 16:22:50,583-INFO: global_step: 18000, loss: 4.2732, train_acc: 0.6944
+2020-08-15 16:22:57,058-INFO: global_step: 18500, loss: 4.2981, train_acc: 0.6931
+2020-08-15 16:23:01,715-INFO: global_step: 19000, loss: 4.3218, train_acc: 0.6875
+2020-08-15 16:23:07,871-INFO: global_step: 19500, loss: 4.3130, train_acc: 0.6912
+2020-08-15 16:23:12,541-INFO: global_step: 20000, loss: 4.3315, train_acc: 0.6873
+2020-08-15 16:23:12,655-INFO: model saved in ./model_swap/step_20000
+2020-08-15 16:23:17,234-INFO: global_step: 20500, loss: 4.3261, train_acc: 0.6868
+2020-08-15 16:23:23,337-INFO: global_step: 21000, loss: 4.3268, train_acc: 0.6885
+2020-08-15 16:23:27,897-INFO: global_step: 21500, loss: 4.3779, train_acc: 0.6801
+2020-08-15 16:23:32,518-INFO: global_step: 22000, loss: 4.3128, train_acc: 0.6888
+2020-08-15 16:23:38,598-INFO: global_step: 22500, loss: 4.3419, train_acc: 0.6858
+2020-08-15 16:23:43,184-INFO: global_step: 23000, loss: 4.3581, train_acc: 0.6862
+2020-08-15 16:23:49,437-INFO: global_step: 23500, loss: 4.3448, train_acc: 0.6853
+2020-08-15 16:23:54,051-INFO: global_step: 24000, loss: 4.3576, train_acc: 0.6819
+2020-08-15 16:23:54,149-INFO: model saved in ./model_swap/step_24000
+2020-08-15 16:23:58,952-INFO: global_step: 24500, loss: 4.3311, train_acc: 0.6856
+2020-08-15 16:24:05,183-INFO: global_step: 25000, loss: 4.3444, train_acc: 0.6865
+2020-08-15 16:24:09,845-INFO: global_step: 25500, loss: 4.3357, train_acc: 0.6854
+2020-08-15 16:24:13,622-INFO: epoch loss: 4.3280
+2020-08-15 16:24:15,257-INFO: global_step: 26000, loss: 4.2330, train_acc: 0.7011
+2020-08-15 16:24:21,645-INFO: global_step: 26500, loss: 3.9676, train_acc: 0.7392
+2020-08-15 16:24:26,269-INFO: global_step: 27000, loss: 3.9651, train_acc: 0.7409
+2020-08-15 16:24:32,362-INFO: global_step: 27500, loss: 3.9760, train_acc: 0.7392
+2020-08-15 16:24:36,935-INFO: global_step: 28000, loss: 3.9940, train_acc: 0.7345
+2020-08-15 16:24:37,024-INFO: model saved in ./model_swap/step_28000
+2020-08-15 16:24:41,670-INFO: global_step: 28500, loss: 3.9951, train_acc: 0.7368
+2020-08-15 16:24:47,762-INFO: global_step: 29000, loss: 3.9905, train_acc: 0.7354
+2020-08-15 16:24:52,310-INFO: global_step: 29500, loss: 4.0129, train_acc: 0.7339
+2020-08-15 16:24:56,945-INFO: global_step: 30000, loss: 4.0048, train_acc: 0.7332
+2020-08-15 16:25:03,037-INFO: global_step: 30500, loss: 4.0166, train_acc: 0.7317
+2020-08-15 16:25:07,579-INFO: global_step: 31000, loss: 4.0198, train_acc: 0.7324
+2020-08-15 16:25:13,588-INFO: global_step: 31500, loss: 4.0244, train_acc: 0.7297
+2020-08-15 16:25:18,178-INFO: global_step: 32000, loss: 4.0333, train_acc: 0.7295
+2020-08-15 16:25:18,266-INFO: model saved in ./model_swap/step_32000
+2020-08-15 16:25:22,829-INFO: global_step: 32500, loss: 4.0333, train_acc: 0.7301
+2020-08-15 16:25:28,923-INFO: global_step: 33000, loss: 4.0476, train_acc: 0.7275
+2020-08-15 16:25:33,620-INFO: global_step: 33500, loss: 4.0325, train_acc: 0.7302
+2020-08-15 16:25:38,313-INFO: global_step: 34000, loss: 4.0488, train_acc: 0.7289
+2020-08-15 16:25:44,637-INFO: global_step: 34500, loss: 4.0133, train_acc: 0.7331
+2020-08-15 16:25:44,823-INFO: epoch loss: 4.0094
+2020-08-15 16:25:49,960-INFO: global_step: 35000, loss: 3.7924, train_acc: 0.7619
+2020-08-15 16:25:56,193-INFO: global_step: 35500, loss: 3.7854, train_acc: 0.7631
+2020-08-15 16:26:00,733-INFO: global_step: 36000, loss: 3.7952, train_acc: 0.7605
+2020-08-15 16:26:00,824-INFO: model saved in ./model_swap/step_36000
+2020-08-15 16:26:05,455-INFO: global_step: 36500, loss: 3.8137, train_acc: 0.7581
+2020-08-15 16:26:11,577-INFO: global_step: 37000, loss: 3.8321, train_acc: 0.7552
+2020-08-15 16:26:16,200-INFO: global_step: 37500, loss: 3.8166, train_acc: 0.7581
+2020-08-15 16:26:20,840-INFO: global_step: 38000, loss: 3.8393, train_acc: 0.7560
+2020-08-15 16:26:27,463-INFO: global_step: 38500, loss: 3.8107, train_acc: 0.7571
+2020-08-15 16:26:32,025-INFO: global_step: 39000, loss: 3.8161, train_acc: 0.7588
+2020-08-15 16:26:38,172-INFO: global_step: 39500, loss: 3.8430, train_acc: 0.7559
+2020-08-15 16:26:42,759-INFO: global_step: 40000, loss: 3.8196, train_acc: 0.7556
+2020-08-15 16:26:42,849-INFO: model saved in ./model_swap/step_40000
+2020-08-15 16:26:47,481-INFO: global_step: 40500, loss: 3.8299, train_acc: 0.7581
+2020-08-15 16:26:53,593-INFO: global_step: 41000, loss: 3.8452, train_acc: 0.7539
+2020-08-15 16:26:58,185-INFO: global_step: 41500, loss: 3.8471, train_acc: 0.7536
+2020-08-15 16:27:02,809-INFO: global_step: 42000, loss: 3.8268, train_acc: 0.7587
+2020-08-15 16:27:08,860-INFO: global_step: 42500, loss: 3.8514, train_acc: 0.7535
+2020-08-15 16:27:13,443-INFO: global_step: 43000, loss: 3.8372, train_acc: 0.7547
+2020-08-15 16:27:14,835-INFO: epoch loss: 3.8235
+2020-08-15 16:27:20,192-INFO: global_step: 43500, loss: 3.7530, train_acc: 0.7638
+2020-08-15 16:27:24,934-INFO: global_step: 44000, loss: 3.6987, train_acc: 0.7713
+2020-08-15 16:27:25,033-INFO: model saved in ./model_swap/step_44000
+2020-08-15 16:27:29,815-INFO: global_step: 44500, loss: 3.7268, train_acc: 0.7664
+2020-08-15 16:27:36,242-INFO: global_step: 45000, loss: 3.7238, train_acc: 0.7698
+2020-08-15 16:27:40,891-INFO: global_step: 45500, loss: 3.7068, train_acc: 0.7719
+2020-08-15 16:27:46,995-INFO: global_step: 46000, loss: 3.7211, train_acc: 0.7694
+2020-08-15 16:27:52,053-INFO: global_step: 46500, loss: 3.7232, train_acc: 0.7693
+2020-08-15 16:27:56,716-INFO: global_step: 47000, loss: 3.7350, train_acc: 0.7677
+2020-08-15 16:28:02,768-INFO: global_step: 47500, loss: 3.7441, train_acc: 0.7669
+2020-08-15 16:28:07,336-INFO: global_step: 48000, loss: 3.7158, train_acc: 0.7708
+2020-08-15 16:28:07,425-INFO: model saved in ./model_swap/step_48000
+2020-08-15 16:28:11,985-INFO: global_step: 48500, loss: 3.7112, train_acc: 0.7695
+2020-08-15 16:28:18,127-INFO: global_step: 49000, loss: 3.7050, train_acc: 0.7725
+2020-08-15 16:28:23,043-INFO: global_step: 49500, loss: 3.7124, train_acc: 0.7709
+2020-08-15 16:28:29,173-INFO: global_step: 50000, loss: 3.7365, train_acc: 0.7666
+2020-08-15 16:28:33,792-INFO: global_step: 50500, loss: 3.7387, train_acc: 0.7673
+2020-08-15 16:28:38,392-INFO: global_step: 51000, loss: 3.7287, train_acc: 0.7674
+2020-08-15 16:28:44,430-INFO: global_step: 51500, loss: 3.7409, train_acc: 0.7662
+2020-08-15 16:28:47,095-INFO: epoch loss: 3.7229
+2020-08-15 16:28:49,718-INFO: global_step: 52000, loss: 3.7086, train_acc: 0.7697
+2020-08-15 16:28:49,814-INFO: model saved in ./model_swap/step_52000
+2020-08-15 16:28:54,422-INFO: global_step: 52500, loss: 3.6473, train_acc: 0.7783
+2020-08-15 16:29:00,532-INFO: global_step: 53000, loss: 3.6558, train_acc: 0.7746
+2020-08-15 16:29:05,207-INFO: global_step: 53500, loss: 3.6585, train_acc: 0.7767
+2020-08-15 16:29:11,392-INFO: global_step: 54000, loss: 3.6629, train_acc: 0.7743
+2020-08-15 16:29:16,028-INFO: global_step: 54500, loss: 3.6487, train_acc: 0.7777
+2020-08-15 16:29:21,356-INFO: global_step: 55000, loss: 3.6768, train_acc: 0.7742
+2020-08-15 16:29:27,929-INFO: global_step: 55500, loss: 3.6685, train_acc: 0.7764
+2020-08-15 16:29:32,640-INFO: global_step: 56000, loss: 3.6706, train_acc: 0.7751
+2020-08-15 16:29:32,732-INFO: model saved in ./model_swap/step_56000
+2020-08-15 16:29:37,359-INFO: global_step: 56500, loss: 3.6719, train_acc: 0.7724
+2020-08-15 16:29:43,503-INFO: global_step: 57000, loss: 3.6865, train_acc: 0.7724
+2020-08-15 16:29:48,092-INFO: global_step: 57500, loss: 3.6807, train_acc: 0.7722
+2020-08-15 16:29:54,127-INFO: global_step: 58000, loss: 3.6784, train_acc: 0.7746
+2020-08-15 16:29:58,756-INFO: global_step: 58500, loss: 3.6875, train_acc: 0.7722
+2020-08-15 16:30:03,516-INFO: global_step: 59000, loss: 3.6940, train_acc: 0.7722
+2020-08-15 16:30:10,038-INFO: global_step: 59500, loss: 3.6862, train_acc: 0.7741
+2020-08-15 16:30:14,697-INFO: global_step: 60000, loss: 3.6698, train_acc: 0.7736
+2020-08-15 16:30:14,790-INFO: model saved in ./model_swap/step_60000
+2020-08-15 16:30:18,567-INFO: epoch loss: 3.6716
+2020-08-15 16:30:21,355-INFO: global_step: 60500, loss: 3.6702, train_acc: 0.7740
+2020-08-15 16:30:26,008-INFO: global_step: 61000, loss: 3.6252, train_acc: 0.7802
+2020-08-15 16:30:30,622-INFO: global_step: 61500, loss: 3.6551, train_acc: 0.7771
+2020-08-15 16:30:37,013-INFO: global_step: 62000, loss: 3.6511, train_acc: 0.7765
+2020-08-15 16:30:41,844-INFO: global_step: 62500, loss: 3.6381, train_acc: 0.7773
+2020-08-15 16:30:46,456-INFO: global_step: 63000, loss: 3.6381, train_acc: 0.7800
+2020-08-15 16:30:52,649-INFO: global_step: 63500, loss: 3.6459, train_acc: 0.7771
+2020-08-15 16:30:57,370-INFO: global_step: 64000, loss: 3.6220, train_acc: 0.7800
+2020-08-15 16:30:57,464-INFO: model saved in ./model_swap/step_64000
+2020-08-15 16:31:03,744-INFO: global_step: 64500, loss: 3.6447, train_acc: 0.7762
+2020-08-15 16:31:08,589-INFO: global_step: 65000, loss: 3.6473, train_acc: 0.7761
+2020-08-15 16:31:13,176-INFO: global_step: 65500, loss: 3.6620, train_acc: 0.7757
+2020-08-15 16:31:19,355-INFO: global_step: 66000, loss: 3.6549, train_acc: 0.7780
+2020-08-15 16:31:24,033-INFO: global_step: 66500, loss: 3.6656, train_acc: 0.7756
+2020-08-15 16:31:28,627-INFO: global_step: 67000, loss: 3.6632, train_acc: 0.7745
+2020-08-15 16:31:34,697-INFO: global_step: 67500, loss: 3.6435, train_acc: 0.7771
+2020-08-15 16:31:39,321-INFO: global_step: 68000, loss: 3.6435, train_acc: 0.7771
+2020-08-15 16:31:39,413-INFO: model saved in ./model_swap/step_68000
+2020-08-15 16:31:45,507-INFO: global_step: 68500, loss: 3.6463, train_acc: 0.7762
+2020-08-15 16:31:50,147-INFO: global_step: 69000, loss: 3.6450, train_acc: 0.7788
+2020-08-15 16:31:50,550-INFO: epoch loss: 3.6464
+2020-08-15 16:31:55,355-INFO: global_step: 69500, loss: 3.6311, train_acc: 0.7775
+2020-08-15 16:32:02,292-INFO: global_step: 70000, loss: 3.6376, train_acc: 0.7789
+2020-08-15 16:32:07,013-INFO: global_step: 70500, loss: 3.6330, train_acc: 0.7767
+2020-08-15 16:32:11,612-INFO: global_step: 71000, loss: 3.6110, train_acc: 0.7813
+2020-08-15 16:32:18,020-INFO: global_step: 71500, loss: 3.6335, train_acc: 0.7773
+2020-08-15 16:32:22,630-INFO: global_step: 72000, loss: 3.6355, train_acc: 0.7769
+2020-08-15 16:32:22,719-INFO: model saved in ./model_swap/step_72000
+2020-08-15 16:32:28,844-INFO: global_step: 72500, loss: 3.6276, train_acc: 0.7783
+2020-08-15 16:32:33,743-INFO: global_step: 73000, loss: 3.6450, train_acc: 0.7751
+2020-08-15 16:32:38,318-INFO: global_step: 73500, loss: 3.6198, train_acc: 0.7812
+2020-08-15 16:32:44,448-INFO: global_step: 74000, loss: 3.6491, train_acc: 0.7780
+2020-08-15 16:32:49,190-INFO: global_step: 74500, loss: 3.6535, train_acc: 0.7766
+2020-08-15 16:32:55,369-INFO: global_step: 75000, loss: 3.6201, train_acc: 0.7811
+2020-08-15 16:32:59,941-INFO: global_step: 75500, loss: 3.6330, train_acc: 0.7797
+2020-08-15 16:33:04,540-INFO: global_step: 76000, loss: 3.6405, train_acc: 0.7794
+2020-08-15 16:33:04,656-INFO: model saved in ./model_swap/step_76000
+2020-08-15 16:33:10,936-INFO: global_step: 76500, loss: 3.6338, train_acc: 0.7790
+2020-08-15 16:33:15,767-INFO: global_step: 77000, loss: 3.6475, train_acc: 0.7774
+2020-08-15 16:33:20,439-INFO: global_step: 77500, loss: 3.6195, train_acc: 0.7809
+2020-08-15 16:33:23,578-INFO: epoch loss: 3.6343
+2020-08-15 16:33:27,176-INFO: global_step: 78000, loss: 3.6382, train_acc: 0.7782
+2020-08-15 16:33:32,239-INFO: global_step: 78500, loss: 3.6152, train_acc: 0.7799
+2020-08-15 16:33:38,978-INFO: global_step: 79000, loss: 3.6323, train_acc: 0.7785
+2020-08-15 16:33:43,717-INFO: global_step: 79500, loss: 3.6268, train_acc: 0.7797
+2020-08-15 16:33:48,590-INFO: global_step: 80000, loss: 3.6393, train_acc: 0.7770
+2020-08-15 16:33:48,679-INFO: model saved in ./model_swap/step_80000
+2020-08-15 16:33:55,701-INFO: global_step: 80500, loss: 3.6153, train_acc: 0.7801
+2020-08-15 16:34:00,371-INFO: global_step: 81000, loss: 3.6279, train_acc: 0.7814
+2020-08-15 16:34:05,019-INFO: global_step: 81500, loss: 3.6278, train_acc: 0.7796
+2020-08-15 16:34:11,217-INFO: global_step: 82000, loss: 3.6244, train_acc: 0.7789
+2020-08-15 16:34:15,834-INFO: global_step: 82500, loss: 3.6142, train_acc: 0.7829
+2020-08-15 16:34:21,924-INFO: global_step: 83000, loss: 3.6446, train_acc: 0.7767
+2020-08-15 16:34:26,558-INFO: global_step: 83500, loss: 3.6130, train_acc: 0.7815
+2020-08-15 16:34:31,199-INFO: global_step: 84000, loss: 3.6105, train_acc: 0.7806
+2020-08-15 16:34:31,292-INFO: model saved in ./model_swap/step_84000
+2020-08-15 16:34:37,335-INFO: global_step: 84500, loss: 3.6349, train_acc: 0.7762
+2020-08-15 16:34:41,942-INFO: global_step: 85000, loss: 3.6470, train_acc: 0.7774
+2020-08-15 16:34:46,564-INFO: global_step: 85500, loss: 3.6437, train_acc: 0.7766
+2020-08-15 16:34:52,633-INFO: global_step: 86000, loss: 3.6366, train_acc: 0.7790
+2020-08-15 16:34:55,493-INFO: epoch loss: 3.6286
+2020-08-15 16:34:57,673-INFO: global_step: 86500, loss: 3.6340, train_acc: 0.7784
+2020-08-15 16:35:03,871-INFO: global_step: 87000, loss: 3.6550, train_acc: 0.7760
+2020-08-15 16:35:08,549-INFO: global_step: 87500, loss: 3.6257, train_acc: 0.7788
+2020-08-15 16:35:13,208-INFO: global_step: 88000, loss: 3.6308, train_acc: 0.7802
+2020-08-15 16:35:13,302-INFO: model saved in ./model_swap/step_88000
+2020-08-15 16:35:19,451-INFO: global_step: 88500, loss: 3.6277, train_acc: 0.7781
+2020-08-15 16:35:24,078-INFO: global_step: 89000, loss: 3.6114, train_acc: 0.7806
+2020-08-15 16:35:28,644-INFO: global_step: 89500, loss: 3.6251, train_acc: 0.7836
+2020-08-15 16:35:34,783-INFO: global_step: 90000, loss: 3.6281, train_acc: 0.7788
+2020-08-15 16:35:39,379-INFO: global_step: 90500, loss: 3.6350, train_acc: 0.7802
+2020-08-15 16:35:45,546-INFO: global_step: 91000, loss: 3.6230, train_acc: 0.7810
+2020-08-15 16:35:50,111-INFO: global_step: 91500, loss: 3.6190, train_acc: 0.7807
+2020-08-15 16:35:54,808-INFO: global_step: 92000, loss: 3.6273, train_acc: 0.7789
+2020-08-15 16:35:54,910-INFO: model saved in ./model_swap/step_92000
+2020-08-15 16:36:01,079-INFO: global_step: 92500, loss: 3.6145, train_acc: 0.7802
+2020-08-15 16:36:05,705-INFO: global_step: 93000, loss: 3.6230, train_acc: 0.7790
+2020-08-15 16:36:10,279-INFO: global_step: 93500, loss: 3.6416, train_acc: 0.7769
+2020-08-15 16:36:16,720-INFO: global_step: 94000, loss: 3.6051, train_acc: 0.7810
+2020-08-15 16:36:22,024-INFO: global_step: 94500, loss: 3.6212, train_acc: 0.7781
+2020-08-15 16:36:28,153-INFO: epoch loss: 3.6259
+2020-08-15 16:36:29,114-INFO: global_step: 95000, loss: 3.6294, train_acc: 0.7787
+2020-08-15 16:36:33,688-INFO: global_step: 95500, loss: 3.6241, train_acc: 0.7792
+2020-08-15 16:36:38,344-INFO: global_step: 96000, loss: 3.6348, train_acc: 0.7774
+2020-08-15 16:36:38,436-INFO: model saved in ./model_swap/step_96000
+2020-08-15 16:36:44,559-INFO: global_step: 96500, loss: 3.6184, train_acc: 0.7820
+2020-08-15 16:36:49,143-INFO: global_step: 97000, loss: 3.6109, train_acc: 0.7809
+2020-08-15 16:36:55,301-INFO: global_step: 97500, loss: 3.6291, train_acc: 0.7789
+2020-08-15 16:36:59,878-INFO: global_step: 98000, loss: 3.6173, train_acc: 0.7789
+2020-08-15 16:37:04,536-INFO: global_step: 98500, loss: 3.6366, train_acc: 0.7806
+2020-08-15 16:37:10,599-INFO: global_step: 99000, loss: 3.6053, train_acc: 0.7816
+2020-08-15 16:37:15,156-INFO: global_step: 99500, loss: 3.6409, train_acc: 0.7775
+2020-08-15 16:37:19,806-INFO: global_step: 100000, loss: 3.6275, train_acc: 0.7776
+2020-08-15 16:37:19,900-INFO: model saved in ./model_swap/step_100000
+2020-08-15 16:37:25,988-INFO: global_step: 100500, loss: 3.6026, train_acc: 0.7809
+2020-08-15 16:37:30,575-INFO: global_step: 101000, loss: 3.6037, train_acc: 0.7830
+2020-08-15 16:37:36,620-INFO: global_step: 101500, loss: 3.6438, train_acc: 0.7772
+2020-08-15 16:37:41,209-INFO: global_step: 102000, loss: 3.6365, train_acc: 0.7788
+2020-08-15 16:37:45,829-INFO: global_step: 102500, loss: 3.6273, train_acc: 0.7798
+2020-08-15 16:37:51,920-INFO: global_step: 103000, loss: 3.6286, train_acc: 0.7821
+2020-08-15 16:37:56,576-INFO: global_step: 103500, loss: 3.6352, train_acc: 0.7750
+2020-08-15 16:37:57,215-INFO: epoch loss: 3.6246
+2020-08-15 16:38:01,753-INFO: global_step: 104000, loss: 3.6374, train_acc: 0.7768
+2020-08-15 16:38:01,852-INFO: model saved in ./model_swap/step_104000
+2020-08-15 16:38:08,019-INFO: global_step: 104500, loss: 3.6132, train_acc: 0.7818
+2020-08-15 16:38:12,817-INFO: global_step: 105000, loss: 3.6203, train_acc: 0.7822
+2020-08-15 16:38:19,322-INFO: global_step: 105500, loss: 3.6273, train_acc: 0.7789
+2020-08-15 16:38:23,994-INFO: global_step: 106000, loss: 3.6276, train_acc: 0.7790
+2020-08-15 16:38:28,613-INFO: global_step: 106500, loss: 3.6196, train_acc: 0.7796
+2020-08-15 16:38:34,720-INFO: global_step: 107000, loss: 3.6237, train_acc: 0.7804
+2020-08-15 16:38:39,360-INFO: global_step: 107500, loss: 3.6511, train_acc: 0.7775
+2020-08-15 16:38:43,995-INFO: global_step: 108000, loss: 3.6104, train_acc: 0.7808
+2020-08-15 16:38:44,093-INFO: model saved in ./model_swap/step_108000
+2020-08-15 16:38:50,224-INFO: global_step: 108500, loss: 3.6266, train_acc: 0.7795
+2020-08-15 16:38:54,820-INFO: global_step: 109000, loss: 3.6167, train_acc: 0.7787
+2020-08-15 16:39:00,966-INFO: global_step: 109500, loss: 3.6118, train_acc: 0.7807
+2020-08-15 16:39:05,566-INFO: global_step: 110000, loss: 3.6167, train_acc: 0.7817
+2020-08-15 16:39:10,138-INFO: global_step: 110500, loss: 3.6216, train_acc: 0.7795
+2020-08-15 16:39:16,220-INFO: global_step: 111000, loss: 3.6329, train_acc: 0.7762
+2020-08-15 16:39:20,828-INFO: global_step: 111500, loss: 3.6358, train_acc: 0.7778
+2020-08-15 16:39:25,400-INFO: global_step: 112000, loss: 3.6134, train_acc: 0.7796
+2020-08-15 16:39:25,498-INFO: model saved in ./model_swap/step_112000
+2020-08-15 16:39:28,814-INFO: epoch loss: 3.6241
+2020-08-15 16:39:32,013-INFO: global_step: 112500, loss: 3.6035, train_acc: 0.7853
+2020-08-15 16:39:36,601-INFO: global_step: 113000, loss: 3.6249, train_acc: 0.7775
+2020-08-15 16:39:42,714-INFO: global_step: 113500, loss: 3.6255, train_acc: 0.7802
+2020-08-15 16:39:47,386-INFO: global_step: 114000, loss: 3.6206, train_acc: 0.7808
+2020-08-15 16:39:52,069-INFO: global_step: 114500, loss: 3.6159, train_acc: 0.7818
+2020-08-15 16:39:58,237-INFO: global_step: 115000, loss: 3.6246, train_acc: 0.7792
+2020-08-15 16:40:02,874-INFO: global_step: 115500, loss: 3.6130, train_acc: 0.7801
+2020-08-15 16:40:07,468-INFO: global_step: 116000, loss: 3.6234, train_acc: 0.7804
+2020-08-15 16:40:07,563-INFO: model saved in ./model_swap/step_116000
+2020-08-15 16:40:14,227-INFO: global_step: 116500, loss: 3.6102, train_acc: 0.7811
+2020-08-15 16:40:18,966-INFO: global_step: 117000, loss: 3.6359, train_acc: 0.7763
+2020-08-15 16:40:26,170-INFO: global_step: 117500, loss: 3.6460, train_acc: 0.7778
+2020-08-15 16:40:31,475-INFO: global_step: 118000, loss: 3.6325, train_acc: 0.7807
+2020-08-15 16:40:36,798-INFO: global_step: 118500, loss: 3.6247, train_acc: 0.7812
+2020-08-15 16:40:43,390-INFO: global_step: 119000, loss: 3.6342, train_acc: 0.7785
+2020-08-15 16:40:47,992-INFO: global_step: 119500, loss: 3.6213, train_acc: 0.7784
+2020-08-15 16:40:52,573-INFO: global_step: 120000, loss: 3.6454, train_acc: 0.7767
+2020-08-15 16:40:54,160-INFO: model saved in ./model_swap/step_120000
+2020-08-15 16:40:58,718-INFO: global_step: 120500, loss: 3.6087, train_acc: 0.7798
+2020-08-15 16:41:01,811-INFO: epoch loss: 3.6238
+2020-08-15 16:41:03,832-INFO: global_step: 121000, loss: 3.6153, train_acc: 0.7802
+2020-08-15 16:41:10,107-INFO: global_step: 121500, loss: 3.6164, train_acc: 0.7809
+2020-08-15 16:41:14,816-INFO: global_step: 122000, loss: 3.6116, train_acc: 0.7820
+2020-08-15 16:41:19,468-INFO: global_step: 122500, loss: 3.6239, train_acc: 0.7797
+2020-08-15 16:41:25,630-INFO: global_step: 123000, loss: 3.6316, train_acc: 0.7785
+2020-08-15 16:41:30,282-INFO: global_step: 123500, loss: 3.6124, train_acc: 0.7829
+2020-08-15 16:41:36,407-INFO: global_step: 124000, loss: 3.6282, train_acc: 0.7808
+2020-08-15 16:41:36,502-INFO: model saved in ./model_swap/step_124000
+2020-08-15 16:41:41,051-INFO: global_step: 124500, loss: 3.6255, train_acc: 0.7818
+2020-08-15 16:41:45,666-INFO: global_step: 125000, loss: 3.6479, train_acc: 0.7778
+2020-08-15 16:41:51,821-INFO: global_step: 125500, loss: 3.6232, train_acc: 0.7794
+2020-08-15 16:41:56,430-INFO: global_step: 126000, loss: 3.6247, train_acc: 0.7784
+2020-08-15 16:42:01,030-INFO: global_step: 126500, loss: 3.6289, train_acc: 0.7794
+2020-08-15 16:42:07,165-INFO: global_step: 127000, loss: 3.6180, train_acc: 0.7784
+2020-08-15 16:42:11,770-INFO: global_step: 127500, loss: 3.6066, train_acc: 0.7805
+2020-08-15 16:42:17,949-INFO: global_step: 128000, loss: 3.6402, train_acc: 0.7767
+2020-08-15 16:42:18,039-INFO: model saved in ./model_swap/step_128000
+2020-08-15 16:42:22,695-INFO: global_step: 128500, loss: 3.6133, train_acc: 0.7798
+2020-08-15 16:42:27,319-INFO: global_step: 129000, loss: 3.6287, train_acc: 0.7786
+2020-08-15 16:42:33,097-INFO: epoch loss: 3.6237
+2020-08-15 16:42:33,864-INFO: global_step: 129500, loss: 3.6245, train_acc: 0.7787
+2020-08-15 16:42:38,515-INFO: global_step: 130000, loss: 3.6151, train_acc: 0.7791
+2020-08-15 16:42:43,120-INFO: global_step: 130500, loss: 3.6238, train_acc: 0.7809
+2020-08-15 16:42:49,230-INFO: global_step: 131000, loss: 3.6266, train_acc: 0.7794
+2020-08-15 16:42:54,313-INFO: global_step: 131500, loss: 3.6297, train_acc: 0.7799
+2020-08-15 16:43:01,062-INFO: global_step: 132000, loss: 3.6254, train_acc: 0.7782
+2020-08-15 16:43:01,149-INFO: model saved in ./model_swap/step_132000
+2020-08-15 16:43:05,837-INFO: global_step: 132500, loss: 3.6257, train_acc: 0.7807
+2020-08-15 16:43:10,514-INFO: global_step: 133000, loss: 3.6246, train_acc: 0.7798
+2020-08-15 16:43:16,629-INFO: global_step: 133500, loss: 3.6241, train_acc: 0.7779
+2020-08-15 16:43:21,300-INFO: global_step: 134000, loss: 3.6226, train_acc: 0.7793
+2020-08-15 16:43:26,043-INFO: global_step: 134500, loss: 3.6327, train_acc: 0.7787
+2020-08-15 16:43:32,286-INFO: global_step: 135000, loss: 3.6147, train_acc: 0.7802
+2020-08-15 16:43:36,888-INFO: global_step: 135500, loss: 3.6191, train_acc: 0.7810
+2020-08-15 16:43:42,960-INFO: global_step: 136000, loss: 3.6203, train_acc: 0.7797
+2020-08-15 16:43:43,053-INFO: model saved in ./model_swap/step_136000
+2020-08-15 16:43:47,657-INFO: global_step: 136500, loss: 3.6390, train_acc: 0.7776
+2020-08-15 16:43:52,276-INFO: global_step: 137000, loss: 3.6109, train_acc: 0.7818
+2020-08-15 16:43:58,438-INFO: global_step: 137500, loss: 3.6040, train_acc: 0.7824
+2020-08-15 16:44:03,041-INFO: global_step: 138000, loss: 3.6418, train_acc: 0.7775
+2020-08-15 16:44:03,906-INFO: epoch loss: 3.6236
+2020-08-15 16:44:10,118-INFO: global_step: 138500, loss: 3.6175, train_acc: 0.7795
+2020-08-15 16:44:14,911-INFO: global_step: 139000, loss: 3.6192, train_acc: 0.7797
+2020-08-15 16:44:19,547-INFO: global_step: 139500, loss: 3.6177, train_acc: 0.7812
+2020-08-15 16:44:25,676-INFO: global_step: 140000, loss: 3.6086, train_acc: 0.7824
+2020-08-15 16:44:25,781-INFO: model saved in ./model_swap/step_140000
+2020-08-15 16:44:30,333-INFO: global_step: 140500, loss: 3.6199, train_acc: 0.7811
+2020-08-15 16:44:34,965-INFO: global_step: 141000, loss: 3.6209, train_acc: 0.7776
+2020-08-15 16:44:41,099-INFO: global_step: 141500, loss: 3.6260, train_acc: 0.7772
+2020-08-15 16:44:45,710-INFO: global_step: 142000, loss: 3.6315, train_acc: 0.7784
+2020-08-15 16:44:51,853-INFO: global_step: 142500, loss: 3.6053, train_acc: 0.7829
+2020-08-15 16:44:56,543-INFO: global_step: 143000, loss: 3.6136, train_acc: 0.7817
+2020-08-15 16:45:01,143-INFO: global_step: 143500, loss: 3.6160, train_acc: 0.7809
+2020-08-15 16:45:07,313-INFO: global_step: 144000, loss: 3.6351, train_acc: 0.7797
+2020-08-15 16:45:07,405-INFO: model saved in ./model_swap/step_144000
+2020-08-15 16:45:11,991-INFO: global_step: 144500, loss: 3.6262, train_acc: 0.7812
+2020-08-15 16:45:16,643-INFO: global_step: 145000, loss: 3.6620, train_acc: 0.7745
+2020-08-15 16:45:22,786-INFO: global_step: 145500, loss: 3.6303, train_acc: 0.7787
+2020-08-15 16:45:27,387-INFO: global_step: 146000, loss: 3.6205, train_acc: 0.7796
+2020-08-15 16:45:33,533-INFO: global_step: 146500, loss: 3.6293, train_acc: 0.7788
+2020-08-15 16:45:35,598-INFO: epoch loss: 3.6236
+2020-08-15 16:45:38,554-INFO: global_step: 147000, loss: 3.6303, train_acc: 0.7796
+2020-08-15 16:45:43,163-INFO: global_step: 147500, loss: 3.6332, train_acc: 0.7771
+2020-08-15 16:45:49,224-INFO: global_step: 148000, loss: 3.6144, train_acc: 0.7802
+2020-08-15 16:45:49,338-INFO: model saved in ./model_swap/step_148000
+2020-08-15 16:45:53,882-INFO: global_step: 148500, loss: 3.6031, train_acc: 0.7839
+2020-08-15 16:45:58,543-INFO: global_step: 149000, loss: 3.6235, train_acc: 0.7795
+2020-08-15 16:46:04,661-INFO: global_step: 149500, loss: 3.6345, train_acc: 0.7795
+2020-08-15 16:46:09,324-INFO: global_step: 150000, loss: 3.6469, train_acc: 0.7766
+2020-08-15 16:46:15,414-INFO: global_step: 150500, loss: 3.6311, train_acc: 0.7789
+2020-08-15 16:46:19,997-INFO: global_step: 151000, loss: 3.5977, train_acc: 0.7830
+2020-08-15 16:46:24,608-INFO: global_step: 151500, loss: 3.6218, train_acc: 0.7791
+2020-08-15 16:46:30,763-INFO: global_step: 152000, loss: 3.6076, train_acc: 0.7811
+2020-08-15 16:46:30,854-INFO: model saved in ./model_swap/step_152000
+2020-08-15 16:46:35,445-INFO: global_step: 152500, loss: 3.6351, train_acc: 0.7775
+2020-08-15 16:46:41,681-INFO: global_step: 153000, loss: 3.6289, train_acc: 0.7808
+2020-08-15 16:46:46,328-INFO: global_step: 153500, loss: 3.6171, train_acc: 0.7798
+2020-08-15 16:46:50,988-INFO: global_step: 154000, loss: 3.6374, train_acc: 0.7775
+2020-08-15 16:46:57,146-INFO: global_step: 154500, loss: 3.6358, train_acc: 0.7772
+2020-08-15 16:47:01,761-INFO: global_step: 155000, loss: 3.6037, train_acc: 0.7831
+2020-08-15 16:47:05,134-INFO: epoch loss: 3.6236
+2020-08-15 16:47:06,967-INFO: global_step: 155500, loss: 3.6292, train_acc: 0.7788
+2020-08-15 16:47:13,106-INFO: global_step: 156000, loss: 3.6294, train_acc: 0.7804
+2020-08-15 16:47:13,203-INFO: model saved in ./model_swap/step_156000
+2020-08-15 16:47:17,846-INFO: global_step: 156500, loss: 3.6160, train_acc: 0.7802
+2020-08-15 16:47:24,006-INFO: global_step: 157000, loss: 3.6424, train_acc: 0.7763
+2020-08-15 16:47:28,634-INFO: global_step: 157500, loss: 3.6124, train_acc: 0.7819
+2020-08-15 16:47:33,311-INFO: global_step: 158000, loss: 3.6252, train_acc: 0.7796
+2020-08-15 16:47:39,496-INFO: global_step: 158500, loss: 3.6303, train_acc: 0.7775
+2020-08-15 16:47:44,320-INFO: global_step: 159000, loss: 3.6168, train_acc: 0.7820
+2020-08-15 16:47:49,632-INFO: global_step: 159500, loss: 3.6373, train_acc: 0.7791
+2020-08-15 16:47:56,418-INFO: global_step: 160000, loss: 3.6169, train_acc: 0.7814
+2020-08-15 16:47:56,519-INFO: model saved in ./model_swap/step_160000
+2020-08-15 16:48:01,727-INFO: global_step: 160500, loss: 3.6160, train_acc: 0.7798
+2020-08-15 16:48:07,869-INFO: global_step: 161000, loss: 3.6280, train_acc: 0.7759
+2020-08-15 16:48:12,445-INFO: global_step: 161500, loss: 3.6151, train_acc: 0.7795
+2020-08-15 16:48:17,007-INFO: global_step: 162000, loss: 3.6328, train_acc: 0.7821
+2020-08-15 16:48:23,149-INFO: global_step: 162500, loss: 3.6115, train_acc: 0.7815
+2020-08-15 16:48:27,793-INFO: global_step: 163000, loss: 3.6194, train_acc: 0.7800
+2020-08-15 16:48:32,441-INFO: global_step: 163500, loss: 3.6265, train_acc: 0.7778
+2020-08-15 16:48:38,619-INFO: epoch loss: 3.6236
+2020-08-15 16:48:39,166-INFO: global_step: 164000, loss: 3.6197, train_acc: 0.7796
+2020-08-15 16:48:39,259-INFO: model saved in ./model_swap/step_164000
+2020-08-15 16:48:43,970-INFO: global_step: 164500, loss: 3.6156, train_acc: 0.7836
+2020-08-15 16:48:50,641-INFO: global_step: 165000, loss: 3.6286, train_acc: 0.7796
+2020-08-15 16:48:55,248-INFO: global_step: 165500, loss: 3.6153, train_acc: 0.7796
+2020-08-15 16:48:59,883-INFO: global_step: 166000, loss: 3.6207, train_acc: 0.7813
+2020-08-15 16:49:06,077-INFO: global_step: 166500, loss: 3.6206, train_acc: 0.7808
+2020-08-15 16:49:10,732-INFO: global_step: 167000, loss: 3.6169, train_acc: 0.7801
+2020-08-15 16:49:15,357-INFO: global_step: 167500, loss: 3.6201, train_acc: 0.7803
+2020-08-15 16:49:21,564-INFO: global_step: 168000, loss: 3.6402, train_acc: 0.7761
+2020-08-15 16:49:21,655-INFO: model saved in ./model_swap/step_168000
+2020-08-15 16:49:26,657-INFO: global_step: 168500, loss: 3.6444, train_acc: 0.7774
+2020-08-15 16:49:33,225-INFO: global_step: 169000, loss: 3.6339, train_acc: 0.7779
+2020-08-15 16:49:37,890-INFO: global_step: 169500, loss: 3.6196, train_acc: 0.7821
+2020-08-15 16:49:42,416-INFO: global_step: 170000, loss: 3.6259, train_acc: 0.7772
+2020-08-15 16:49:48,578-INFO: global_step: 170500, loss: 3.6090, train_acc: 0.7831
+2020-08-15 16:49:53,276-INFO: global_step: 171000, loss: 3.6189, train_acc: 0.7782
+2020-08-15 16:49:58,544-INFO: global_step: 171500, loss: 3.6164, train_acc: 0.7800
+2020-08-15 16:50:05,324-INFO: global_step: 172000, loss: 3.6252, train_acc: 0.7791
+2020-08-15 16:50:05,414-INFO: model saved in ./model_swap/step_172000
+2020-08-15 16:50:10,077-INFO: global_step: 172500, loss: 3.6273, train_acc: 0.7784
+2020-08-15 16:50:11,158-INFO: epoch loss: 3.6236
+2020-08-15 16:50:17,135-INFO: global_step: 173000, loss: 3.6303, train_acc: 0.7812
+2020-08-15 16:50:21,775-INFO: global_step: 173500, loss: 3.6249, train_acc: 0.7799
+2020-08-15 16:50:26,402-INFO: global_step: 174000, loss: 3.6315, train_acc: 0.7789
+2020-08-15 16:50:32,614-INFO: global_step: 174500, loss: 3.6231, train_acc: 0.7808
+2020-08-15 16:50:37,314-INFO: global_step: 175000, loss: 3.6121, train_acc: 0.7826
+2020-08-15 16:50:41,910-INFO: global_step: 175500, loss: 3.6167, train_acc: 0.7801
+2020-08-15 16:50:48,132-INFO: global_step: 176000, loss: 3.6560, train_acc: 0.7772
+2020-08-15 16:50:48,234-INFO: model saved in ./model_swap/step_176000
+2020-08-15 16:50:52,781-INFO: global_step: 176500, loss: 3.6093, train_acc: 0.7801
+2020-08-15 16:50:59,511-INFO: global_step: 177000, loss: 3.6228, train_acc: 0.7786
+2020-08-15 16:51:04,864-INFO: global_step: 177500, loss: 3.6044, train_acc: 0.7822
+2020-08-15 16:51:09,597-INFO: global_step: 178000, loss: 3.6230, train_acc: 0.7803
+2020-08-15 16:51:15,716-INFO: global_step: 178500, loss: 3.6207, train_acc: 0.7795
+2020-08-15 16:51:20,405-INFO: global_step: 179000, loss: 3.6297, train_acc: 0.7785
+2020-08-15 16:51:25,045-INFO: global_step: 179500, loss: 3.6164, train_acc: 0.7798
+2020-08-15 16:51:31,187-INFO: global_step: 180000, loss: 3.6179, train_acc: 0.7802
+2020-08-15 16:51:31,309-INFO: model saved in ./model_swap/step_180000
+2020-08-15 16:51:35,903-INFO: global_step: 180500, loss: 3.6211, train_acc: 0.7791
+2020-08-15 16:51:42,073-INFO: global_step: 181000, loss: 3.6340, train_acc: 0.7765
+2020-08-15 16:51:44,376-INFO: epoch loss: 3.6236
+2020-08-15 16:51:47,120-INFO: global_step: 181500, loss: 3.6236, train_acc: 0.7789
+2020-08-15 16:51:51,697-INFO: global_step: 182000, loss: 3.6204, train_acc: 0.7811
+2020-08-15 16:51:57,817-INFO: global_step: 182500, loss: 3.6329, train_acc: 0.7813
+2020-08-15 16:52:02,486-INFO: global_step: 183000, loss: 3.6163, train_acc: 0.7811
+2020-08-15 16:52:08,647-INFO: global_step: 183500, loss: 3.6279, train_acc: 0.7791
+2020-08-15 16:52:13,364-INFO: global_step: 184000, loss: 3.6158, train_acc: 0.7823
+2020-08-15 16:52:13,456-INFO: model saved in ./model_swap/step_184000
+2020-08-15 16:52:18,092-INFO: global_step: 184500, loss: 3.6463, train_acc: 0.7763
+2020-08-15 16:52:24,306-INFO: global_step: 185000, loss: 3.6144, train_acc: 0.7791
+2020-08-15 16:52:28,894-INFO: global_step: 185500, loss: 3.6324, train_acc: 0.7785
+2020-08-15 16:52:33,599-INFO: global_step: 186000, loss: 3.6238, train_acc: 0.7803
+2020-08-15 16:52:40,228-INFO: global_step: 186500, loss: 3.6312, train_acc: 0.7768
+2020-08-15 16:52:44,877-INFO: global_step: 187000, loss: 3.6529, train_acc: 0.7763
+2020-08-15 16:52:50,982-INFO: global_step: 187500, loss: 3.6087, train_acc: 0.7804
+2020-08-15 16:52:55,633-INFO: global_step: 188000, loss: 3.6154, train_acc: 0.7810
+2020-08-15 16:52:55,732-INFO: model saved in ./model_swap/step_188000
+2020-08-15 16:53:00,328-INFO: global_step: 188500, loss: 3.6191, train_acc: 0.7818
+2020-08-15 16:53:06,496-INFO: global_step: 189000, loss: 3.6134, train_acc: 0.7793
+2020-08-15 16:53:11,323-INFO: global_step: 189500, loss: 3.6201, train_acc: 0.7800
+2020-08-15 16:53:14,935-INFO: epoch loss: 3.6236
+2020-08-15 16:53:16,601-INFO: global_step: 190000, loss: 3.6175, train_acc: 0.7789
+2020-08-15 16:53:22,745-INFO: global_step: 190500, loss: 3.6301, train_acc: 0.7803
+2020-08-15 16:53:27,383-INFO: global_step: 191000, loss: 3.6346, train_acc: 0.7780
+2020-08-15 16:53:33,508-INFO: global_step: 191500, loss: 3.6054, train_acc: 0.7825
+2020-08-15 16:53:38,151-INFO: global_step: 192000, loss: 3.6315, train_acc: 0.7785
+2020-08-15 16:53:38,281-INFO: model saved in ./model_swap/step_192000
+2020-08-15 16:53:42,862-INFO: global_step: 192500, loss: 3.6355, train_acc: 0.7780
+2020-08-15 16:53:49,278-INFO: global_step: 193000, loss: 3.6216, train_acc: 0.7790
+2020-08-15 16:53:54,028-INFO: global_step: 193500, loss: 3.6364, train_acc: 0.7811
+2020-08-15 16:54:00,219-INFO: global_step: 194000, loss: 3.6126, train_acc: 0.7803
+2020-08-15 16:54:04,882-INFO: global_step: 194500, loss: 3.6298, train_acc: 0.7792
+2020-08-15 16:54:09,502-INFO: global_step: 195000, loss: 3.6370, train_acc: 0.7773
+2020-08-15 16:54:15,825-INFO: global_step: 195500, loss: 3.6064, train_acc: 0.7812
+2020-08-15 16:54:20,617-INFO: global_step: 196000, loss: 3.6004, train_acc: 0.7828
+2020-08-15 16:54:20,714-INFO: model saved in ./model_swap/step_196000
+2020-08-15 16:54:25,614-INFO: global_step: 196500, loss: 3.6281, train_acc: 0.7797
+2020-08-15 16:54:31,799-INFO: global_step: 197000, loss: 3.6163, train_acc: 0.7786
+2020-08-15 16:54:36,398-INFO: global_step: 197500, loss: 3.6308, train_acc: 0.7772
+2020-08-15 16:54:42,548-INFO: global_step: 198000, loss: 3.6140, train_acc: 0.7819
+2020-08-15 16:54:47,144-INFO: global_step: 198500, loss: 3.6336, train_acc: 0.7788
+2020-08-15 16:54:47,260-INFO: epoch loss: 3.6236
+2020-08-15 16:54:52,208-INFO: global_step: 199000, loss: 3.6375, train_acc: 0.7790
+2020-08-15 16:54:58,341-INFO: global_step: 199500, loss: 3.6243, train_acc: 0.7792
+2020-08-15 16:55:03,016-INFO: global_step: 200000, loss: 3.6188, train_acc: 0.7801
+2020-08-15 16:55:03,112-INFO: model saved in ./model_swap/step_200000
+2020-08-15 16:55:07,725-INFO: global_step: 200500, loss: 3.6316, train_acc: 0.7792
+2020-08-15 16:55:13,912-INFO: global_step: 201000, loss: 3.6256, train_acc: 0.7796
+2020-08-15 16:55:18,554-INFO: global_step: 201500, loss: 3.6168, train_acc: 0.7811
+2020-08-15 16:55:24,733-INFO: global_step: 202000, loss: 3.6163, train_acc: 0.7823
+2020-08-15 16:55:29,350-INFO: global_step: 202500, loss: 3.6374, train_acc: 0.7772
+2020-08-15 16:55:34,455-INFO: global_step: 203000, loss: 3.6367, train_acc: 0.7789
+2020-08-15 16:55:41,278-INFO: global_step: 203500, loss: 3.6284, train_acc: 0.7788
+2020-08-15 16:55:46,287-INFO: global_step: 204000, loss: 3.6157, train_acc: 0.7776
+2020-08-15 16:55:46,381-INFO: model saved in ./model_swap/step_204000
+2020-08-15 16:55:51,029-INFO: global_step: 204500, loss: 3.6172, train_acc: 0.7796
+2020-08-15 16:55:57,165-INFO: global_step: 205000, loss: 3.6129, train_acc: 0.7816
+2020-08-15 16:56:01,826-INFO: global_step: 205500, loss: 3.6100, train_acc: 0.7812
+2020-08-15 16:56:07,994-INFO: global_step: 206000, loss: 3.6328, train_acc: 0.7795
+2020-08-15 16:56:12,682-INFO: global_step: 206500, loss: 3.6256, train_acc: 0.7792
+2020-08-15 16:56:17,237-INFO: global_step: 207000, loss: 3.6161, train_acc: 0.7806
+2020-08-15 16:56:18,527-INFO: epoch loss: 3.6236
+2020-08-15 16:56:23,758-INFO: global_step: 207500, loss: 3.6077, train_acc: 0.7817
+2020-08-15 16:56:28,372-INFO: global_step: 208000, loss: 3.6254, train_acc: 0.7801
+2020-08-15 16:56:28,473-INFO: model saved in ./model_swap/step_208000
+2020-08-15 16:56:32,989-INFO: global_step: 208500, loss: 3.6002, train_acc: 0.7826
+2020-08-15 16:56:39,163-INFO: global_step: 209000, loss: 3.6280, train_acc: 0.7802
+2020-08-15 16:56:43,756-INFO: global_step: 209500, loss: 3.6184, train_acc: 0.7801
+2020-08-15 16:56:49,886-INFO: global_step: 210000, loss: 3.6342, train_acc: 0.7794
+2020-08-15 16:56:54,494-INFO: global_step: 210500, loss: 3.6336, train_acc: 0.7780
+2020-08-15 16:56:59,084-INFO: global_step: 211000, loss: 3.6260, train_acc: 0.7788
+2020-08-15 16:57:05,211-INFO: global_step: 211500, loss: 3.6263, train_acc: 0.7787
+2020-08-15 16:57:10,488-INFO: global_step: 212000, loss: 3.6344, train_acc: 0.7760
+2020-08-15 16:57:10,593-INFO: model saved in ./model_swap/step_212000
+2020-08-15 16:57:16,728-INFO: global_step: 212500, loss: 3.6079, train_acc: 0.7807
+2020-08-15 16:57:21,352-INFO: global_step: 213000, loss: 3.6242, train_acc: 0.7798
+2020-08-15 16:57:25,982-INFO: global_step: 213500, loss: 3.6259, train_acc: 0.7785
+2020-08-15 16:57:32,141-INFO: global_step: 214000, loss: 3.6289, train_acc: 0.7821
+2020-08-15 16:57:36,813-INFO: global_step: 214500, loss: 3.6284, train_acc: 0.7758
+2020-08-15 16:57:41,455-INFO: global_step: 215000, loss: 3.6458, train_acc: 0.7787
+2020-08-15 16:57:47,628-INFO: global_step: 215500, loss: 3.6054, train_acc: 0.7814
+2020-08-15 16:57:50,185-INFO: epoch loss: 3.6236
+2020-08-15 16:57:52,757-INFO: global_step: 216000, loss: 3.6329, train_acc: 0.7802
+2020-08-15 16:57:52,855-INFO: model saved in ./model_swap/step_216000
+2020-08-15 16:57:58,966-INFO: global_step: 216500, loss: 3.6145, train_acc: 0.7810
+2020-08-15 16:58:03,623-INFO: global_step: 217000, loss: 3.6351, train_acc: 0.7764
+2020-08-15 16:58:08,285-INFO: global_step: 217500, loss: 3.6385, train_acc: 0.7792
+2020-08-15 16:58:14,441-INFO: global_step: 218000, loss: 3.6104, train_acc: 0.7809
+2020-08-15 16:58:19,227-INFO: global_step: 218500, loss: 3.6330, train_acc: 0.7778
+2020-08-15 16:58:24,411-INFO: global_step: 219000, loss: 3.6037, train_acc: 0.7816
+2020-08-15 16:58:31,226-INFO: global_step: 219500, loss: 3.6230, train_acc: 0.7784
+2020-08-15 16:58:36,213-INFO: global_step: 220000, loss: 3.6109, train_acc: 0.7797
+2020-08-15 16:58:36,310-INFO: model saved in ./model_swap/step_220000
+2020-08-15 16:58:42,412-INFO: global_step: 220500, loss: 3.6144, train_acc: 0.7816
+2020-08-15 16:58:47,038-INFO: global_step: 221000, loss: 3.6223, train_acc: 0.7819
+2020-08-15 16:58:51,719-INFO: global_step: 221500, loss: 3.6163, train_acc: 0.7793
+2020-08-15 16:58:57,789-INFO: global_step: 222000, loss: 3.6081, train_acc: 0.7795
+2020-08-15 16:59:02,415-INFO: global_step: 222500, loss: 3.6281, train_acc: 0.7787
+2020-08-15 16:59:08,545-INFO: global_step: 223000, loss: 3.6160, train_acc: 0.7832
+2020-08-15 16:59:13,539-INFO: global_step: 223500, loss: 3.6329, train_acc: 0.7799
+2020-08-15 16:59:18,173-INFO: global_step: 224000, loss: 3.6350, train_acc: 0.7792
+2020-08-15 16:59:18,274-INFO: model saved in ./model_swap/step_224000
+2020-08-15 16:59:23,997-INFO: epoch loss: 3.6236
+2020-08-15 16:59:25,303-INFO: global_step: 224500, loss: 3.6429, train_acc: 0.7780
+2020-08-15 16:59:29,891-INFO: global_step: 225000, loss: 3.6037, train_acc: 0.7834
+2020-08-15 16:59:34,520-INFO: global_step: 225500, loss: 3.6190, train_acc: 0.7810
+2020-08-15 16:59:40,740-INFO: global_step: 226000, loss: 3.6162, train_acc: 0.7814
+2020-08-15 16:59:45,409-INFO: global_step: 226500, loss: 3.6263, train_acc: 0.7799
+2020-08-15 16:59:51,536-INFO: global_step: 227000, loss: 3.6186, train_acc: 0.7788
+2020-08-15 16:59:56,161-INFO: global_step: 227500, loss: 3.6414, train_acc: 0.7782
+2020-08-15 17:00:00,814-INFO: global_step: 228000, loss: 3.6147, train_acc: 0.7795
+2020-08-15 17:00:00,906-INFO: model saved in ./model_swap/step_228000
+2020-08-15 17:00:07,030-INFO: global_step: 228500, loss: 3.6387, train_acc: 0.7758
+2020-08-15 17:00:11,763-INFO: global_step: 229000, loss: 3.6082, train_acc: 0.7807
+2020-08-15 17:00:16,906-INFO: global_step: 229500, loss: 3.6324, train_acc: 0.7787
+2020-08-15 17:00:23,063-INFO: global_step: 230000, loss: 3.6156, train_acc: 0.7787
+2020-08-15 17:00:27,688-INFO: global_step: 230500, loss: 3.6369, train_acc: 0.7773
+2020-08-15 17:00:33,873-INFO: global_step: 231000, loss: 3.6167, train_acc: 0.7834
+2020-08-15 17:00:38,489-INFO: global_step: 231500, loss: 3.6268, train_acc: 0.7793
+2020-08-15 17:00:43,082-INFO: global_step: 232000, loss: 3.6298, train_acc: 0.7802
+2020-08-15 17:00:43,195-INFO: model saved in ./model_swap/step_232000
+2020-08-15 17:00:49,254-INFO: global_step: 232500, loss: 3.6319, train_acc: 0.7792
+2020-08-15 17:00:53,898-INFO: global_step: 233000, loss: 3.6279, train_acc: 0.7785
+2020-08-15 17:00:54,216-INFO: epoch loss: 3.6236
+2020-08-15 17:00:59,560-INFO: global_step: 233500, loss: 3.6191, train_acc: 0.7810
+2020-08-15 17:01:06,324-INFO: global_step: 234000, loss: 3.6262, train_acc: 0.7807
+2020-08-15 17:01:11,579-INFO: global_step: 234500, loss: 3.6243, train_acc: 0.7781
+2020-08-15 17:01:18,423-INFO: global_step: 235000, loss: 3.6123, train_acc: 0.7815
+2020-08-15 17:01:23,728-INFO: global_step: 235500, loss: 3.6331, train_acc: 0.7787
+2020-08-15 17:01:28,857-INFO: global_step: 236000, loss: 3.6392, train_acc: 0.7777
+2020-08-15 17:01:28,958-INFO: model saved in ./model_swap/step_236000
+2020-08-15 17:01:35,006-INFO: global_step: 236500, loss: 3.6189, train_acc: 0.7805
+2020-08-15 17:01:39,617-INFO: global_step: 237000, loss: 3.6153, train_acc: 0.7793
+2020-08-15 17:01:45,722-INFO: global_step: 237500, loss: 3.6357, train_acc: 0.7767
+2020-08-15 17:01:50,352-INFO: global_step: 238000, loss: 3.6187, train_acc: 0.7800
+2020-08-15 17:01:54,959-INFO: global_step: 238500, loss: 3.6334, train_acc: 0.7788
+2020-08-15 17:02:01,084-INFO: global_step: 239000, loss: 3.6238, train_acc: 0.7815
+2020-08-15 17:02:05,797-INFO: global_step: 239500, loss: 3.6208, train_acc: 0.7804
+2020-08-15 17:02:10,444-INFO: global_step: 240000, loss: 3.6209, train_acc: 0.7780
+2020-08-15 17:02:10,593-INFO: model saved in ./model_swap/step_240000
+2020-08-15 17:02:16,676-INFO: global_step: 240500, loss: 3.6227, train_acc: 0.7810
+2020-08-15 17:02:21,326-INFO: global_step: 241000, loss: 3.6299, train_acc: 0.7792
+2020-08-15 17:02:27,637-INFO: global_step: 241500, loss: 3.6124, train_acc: 0.7813
+2020-08-15 17:02:29,129-INFO: epoch loss: 3.6236
+2020-08-15 17:02:32,810-INFO: global_step: 242000, loss: 3.6292, train_acc: 0.7790
+2020-08-15 17:02:37,403-INFO: global_step: 242500, loss: 3.6162, train_acc: 0.7801
+2020-08-15 17:02:43,529-INFO: global_step: 243000, loss: 3.6277, train_acc: 0.7781
+2020-08-15 17:02:48,151-INFO: global_step: 243500, loss: 3.6269, train_acc: 0.7814
+2020-08-15 17:02:52,779-INFO: global_step: 244000, loss: 3.6049, train_acc: 0.7806
+2020-08-15 17:02:52,875-INFO: model saved in ./model_swap/step_244000
+2020-08-15 17:02:58,981-INFO: global_step: 244500, loss: 3.6067, train_acc: 0.7831
+2020-08-15 17:03:03,639-INFO: global_step: 245000, loss: 3.6329, train_acc: 0.7758
+2020-08-15 17:03:09,721-INFO: global_step: 245500, loss: 3.6217, train_acc: 0.7805
+2020-08-15 17:03:14,339-INFO: global_step: 246000, loss: 3.6277, train_acc: 0.7802
+2020-08-15 17:03:18,925-INFO: global_step: 246500, loss: 3.6300, train_acc: 0.7803
+2020-08-15 17:03:25,086-INFO: global_step: 247000, loss: 3.6215, train_acc: 0.7793
+2020-08-15 17:03:30,176-INFO: global_step: 247500, loss: 3.6249, train_acc: 0.7791
+2020-08-15 17:03:34,974-INFO: global_step: 248000, loss: 3.6241, train_acc: 0.7791
+2020-08-15 17:03:35,098-INFO: model saved in ./model_swap/step_248000
+2020-08-15 17:03:41,223-INFO: global_step: 248500, loss: 3.6345, train_acc: 0.7810
+2020-08-15 17:03:45,824-INFO: global_step: 249000, loss: 3.6136, train_acc: 0.7789
+2020-08-15 17:03:51,968-INFO: global_step: 249500, loss: 3.6421, train_acc: 0.7780
+2020-08-15 17:03:56,575-INFO: global_step: 250000, loss: 3.6099, train_acc: 0.7798
+2020-08-15 17:03:59,313-INFO: epoch loss: 3.6236
+2020-08-15 17:04:01,732-INFO: global_step: 250500, loss: 3.6302, train_acc: 0.7797
+2020-08-15 17:04:07,883-INFO: global_step: 251000, loss: 3.6332, train_acc: 0.7787
+2020-08-15 17:04:12,580-INFO: global_step: 251500, loss: 3.6138, train_acc: 0.7821
+2020-08-15 17:04:17,236-INFO: global_step: 252000, loss: 3.6295, train_acc: 0.7793
+2020-08-15 17:04:17,342-INFO: model saved in ./model_swap/step_252000
+2020-08-15 17:04:23,459-INFO: global_step: 252500, loss: 3.6350, train_acc: 0.7778
+2020-08-15 17:04:28,045-INFO: global_step: 253000, loss: 3.6194, train_acc: 0.7803
+2020-08-15 17:04:34,136-INFO: global_step: 253500, loss: 3.6243, train_acc: 0.7808
+2020-08-15 17:04:38,767-INFO: global_step: 254000, loss: 3.6130, train_acc: 0.7808
+2020-08-15 17:04:43,360-INFO: global_step: 254500, loss: 3.6181, train_acc: 0.7785
+2020-08-15 17:04:49,388-INFO: global_step: 255000, loss: 3.6129, train_acc: 0.7805
+2020-08-15 17:04:53,991-INFO: global_step: 255500, loss: 3.6183, train_acc: 0.7819
+2020-08-15 17:04:58,556-INFO: global_step: 256000, loss: 3.6374, train_acc: 0.7774
+2020-08-15 17:04:58,664-INFO: model saved in ./model_swap/step_256000
+2020-08-15 17:05:04,736-INFO: global_step: 256500, loss: 3.6228, train_acc: 0.7786
+2020-08-15 17:05:09,330-INFO: global_step: 257000, loss: 3.6261, train_acc: 0.7791
+2020-08-15 17:05:15,448-INFO: global_step: 257500, loss: 3.6314, train_acc: 0.7784
+2020-08-15 17:05:20,077-INFO: global_step: 258000, loss: 3.6228, train_acc: 0.7798
+2020-08-15 17:05:24,665-INFO: global_step: 258500, loss: 3.6264, train_acc: 0.7788
+2020-08-15 17:05:30,054-INFO: epoch loss: 3.6236

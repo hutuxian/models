@@ -41,7 +41,7 @@ def parse_args():
     parser.add_argument(
         '--start_index', type=int, default='0', help='start index')
     parser.add_argument(
-        '--last_index', type=int, default='10', help='end index')
+        '--last_index', type=int, default='20', help='end index')
     parser.add_argument(
         '--hidden_size', type=int, default=100, help='hidden state size')
     parser.add_argument(
@@ -59,8 +59,8 @@ def infer(args):
     exe.run(fluid.default_startup_program())
     infer_program = fluid.default_main_program().clone(for_test=True)
 
-    for epoch_num in range(args.start_index, args.last_index + 1):
-        model_path = args.model_path + "epoch_" + str(epoch_num)
+    for epoch_num in range(args.start_index+1, args.last_index + 1):
+        model_path = args.model_path + "/step_" + str(epoch_num * 4000)
         try:
             if not os.path.exists(model_path):
                 raise ValueError()

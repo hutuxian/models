@@ -53,7 +53,7 @@ def parse_args():
     parser.add_argument(
         '--lr_dc_step', type=int, default=3, help='the number of steps after which the learning rate decay')
     parser.add_argument(
-        '--use_cuda', type=int, default=0, help='whether to use gpu')
+        '--use_cuda', type=int, default=1, help='whether to use gpu')
     parser.add_argument(
         '--use_parallel', type=int, default=1, help='whether to use parallel executor')
     parser.add_argument(
@@ -63,7 +63,7 @@ def parse_args():
 
 def train():
     args = parse_args()
-
+    print(args)
     if args.enable_ce:
         SEED = 102
         fluid.default_main_program().random_seed = SEED
@@ -136,13 +136,18 @@ def train():
                     loss_sum = 0.0
                     acc_sum = 0.0
                     start_time = time.time()
+                if global_step % 4000 == 0:
+                    save_dir = args.model_path + "/step_" + str(global_step)
+                    fetch_vars = [loss, acc]
+                    fluid.io.save_inference_model(save_dir, feed_list, fetch_vars, exe)
+                    logger.info("model saved in " + save_dir)
         except fluid.core.EOFException:
             py_reader.reset()
         logger.info("epoch loss: %.4lf" % (np.mean(epoch_sum)))
-        save_dir = args.model_path + "/epoch_" + str(i)
-        fetch_vars = [loss, acc]
-        fluid.io.save_inference_model(save_dir, feed_list, fetch_vars, exe)
-        logger.info("model saved in " + save_dir)
+        # save_dir = args.model_path + "/epoch_" + str(i)
+        # fetch_vars = [loss, acc]
+        # fluid.io.save_inference_model(save_dir, feed_list, fetch_vars, exe)
+        # logger.info("model saved in " + save_dir)
 
     # only for ce
     if args.enable_ce:

@@ -13,12 +13,22 @@ import pickle
 import operator
 import datetime
 import os
+import random
+import copy
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
     '--dataset',
     default='sample',
     help='dataset name: diginetica/yoochoose/sample')
+parser.add_argument(
+    '--aug_cmd',
+    default='',
+    help='')
+parser.add_argument(
+    '--aug_prob',
+    default='',
+    help='')
 opt = parser.parse_args()
 print(opt)
 
@@ -128,8 +138,8 @@ tra_sess = sorted(
     tra_sess, key=operator.itemgetter(1))  # [(session_id, timestamp), (), ]
 tes_sess = sorted(
     tes_sess, key=operator.itemgetter(1))  # [(session_id, timestamp), (), ]
-print(len(tra_sess))  # 186670    # 7966257
-print(len(tes_sess))  # 15979     # 15324
+print("train dataset session number: ", len(tra_sess))  # 186670    # 7966257
+print("test dataset session number: ", len(tes_sess))  # 15979     # 15324
 print(tra_sess[:3])
 print(tes_sess[:3])
 print("-- Splitting train set and test set @ %ss" % datetime.datetime.now())
@@ -159,7 +169,7 @@ def obtian_tra():
         train_ids += [s]
         train_dates += [date]
         train_seqs += [outseq]
-    print(item_ctr)  # 43098, 37484
+    print("dict size: ", item_ctr)  # 43098, 37484
     with open("./diginetica/config.txt", "w") as fout:
         fout.write(str(item_ctr) + "\n")
     return train_ids, train_dates, train_seqs
@@ -202,15 +212,66 @@ def process_seqs(iseqs, idates):
             ids += [id]
     return out_seqs, out_dates, labs, ids
 
+def data_aug(data_seq, data_label, aug_cmd=[], aug_prob=[]):
+    out_seqs = []
+    out_labels = []
+    dict_num = len(item_dict)
+    assert len(data_seq) == len(data_label), "len of data_seq and data_label must be same"
+    assert len(aug_cmd) == len(aug_prob), "len of cmd and prob must be same"
+    supported_cmd = ["replace", "insert", "delete", "swap"]
+    for aug in aug_cmd:
+        assert aug in supported_cmd, "aug_cmd %s is not supported" % (aug)
+    for i in range(len(aug_cmd)):
+        print("%s with prob %f" % (aug_cmd[i], aug_prob[i]))
+    for index in range(len(data_seq)):
+        seq = data_seq[index]
+        label = data_label[index]
+        out_seqs += [seq]
+        out_labels += [label]
+        for i in range(len(aug_cmd)):
+            need_aug = random.uniform(0,1) < aug_prob[i]
+            if not need_aug:
+                continue
+            new_seq = None
+            if aug_cmd[i] == "replace":
+                new_seq = copy.deepcopy(seq)
+                replace_id = random.randint(0, len(new_seq)-1)
+                new_seq[replace_id] = random.randint(0, dict_num-1)
+            elif aug_cmd[i] == "insert":
+                new_seq = copy.deepcopy(seq)
+                insert_id = random.randint(0, len(new_seq))
+                new_seq.insert(insert_id, random.randint(0, dict_num-1))
+            elif aug_cmd[i] == "delete":
+                if len(seq) == 1:
+                    continue
+                new_seq = copy.deepcopy(seq)
+                delete_id = random.randint(0, len(new_seq)-1)
+                del new_seq[delete_id]
+            elif aug_cmd[i] == "swap":
+                new_seq = copy.deepcopy(seq)
+                i = random.randint(0, len(new_seq)-1)
+                j = random.randint(0, len(new_seq)-1)
+                tmp = new_seq[i]
+                new_seq[i] = new_seq[j]
+                new_seq[j] = tmp
+            out_seqs += [new_seq]
+            out_labels += [label]
+    return out_seqs, out_labels
 
+aug_cmd = opt.aug_cmd.strip().split('+')
+aug_prob = [float(e) for e in opt.aug_prob.strip().split('+')]
 tr_seqs, tr_dates, tr_labs, tr_ids = process_seqs(tra_seqs, tra_dates)
+print("train data len before aug: %d" % (len(tr_seqs)))
+tr_seqs, tr_labs = data_aug(tr_seqs, tr_labs, aug_cmd, aug_prob)
+print("train data len after aug: %d" % (len(tr_seqs)))
 te_seqs, te_dates, te_labs, te_ids = process_seqs(tes_seqs, tes_dates)
 tra = (tr_seqs, tr_labs)
+# tra = (aug_train_seq, aug_train_label)
 tes = (te_seqs, te_labs)
-print(len(tr_seqs))
-print(len(te_seqs))
-print(tr_seqs[:3], tr_dates[:3], tr_labs[:3])
-print(te_seqs[:3], te_dates[:3], te_labs[:3])
+
+print("test data len :", len(te_seqs))
+# print(tr_seqs[:3], tr_dates[:3], tr_labs[:3])
+# print(te_seqs[:3], te_dates[:3], te_labs[:3])
 all = 0
 
 for seq in tra_seqs:
@@ -219,11 +280,16 @@ for seq in tes_seqs:
     all += len(seq)
 print('avg length: ', all / (len(tra_seqs) + len(tes_seqs) * 1.0))
 if opt.dataset == 'diginetica':
-    if not os.path.exists('diginetica'):
-        os.makedirs('diginetica')
-    pickle.dump(tra, open('diginetica/train.txt', 'wb'))
-    pickle.dump(tes, open('diginetica/test.txt', 'wb'))
-    pickle.dump(tra_seqs, open('diginetica/all_train_seq.txt', 'wb'))
+    aug_info = "_".join(aug_cmd)
+    prob_info = "_".join([str(e) for e in aug_prob])
+    prefix = 'diginetica'
+    if aug_info != "":
+        prefix = 'diginetica' + "_" + aug_info + "_" + prob_info
+    if not os.path.exists(prefix):
+        os.makedirs(prefix)
+    pickle.dump(tra, open(prefix + '/train.txt', 'wb'))
+    pickle.dump(tes, open(prefix + '/test.txt', 'wb'))
+    # pickle.dump(tra_seqs, open('diginetica/all_train_seq.txt', 'wb'))
 elif opt.dataset == 'yoochoose':
     if not os.path.exists('yoochoose1_4'):
         os.makedirs('yoochoose1_4')

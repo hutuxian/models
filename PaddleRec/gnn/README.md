@@ -126,3 +126,36 @@ W0308 16:41:56.847705 31709 device_context.cc:271] device: 0, cuDNN Version: 7.0
 2019-03-08 16:43:10,233 - INFO - TEST --> loss: 5.5128, Recall@20: 0.5047
 ...
 ```
+
+
+python -u preprocess.py --dataset diginetica --aug_cmd 'replace' --aug_prob '0.1' > log.replace 2>&1 &
+python -u preprocess.py --dataset diginetica --aug_cmd 'delete' --aug_prob '0.1' > log.delete 2>&1 &
+python -u preprocess.py --dataset diginetica --aug_cmd 'insert' --aug_prob '0.1' > log.insert 2>&1 &
+python -u preprocess.py --dataset diginetica --aug_cmd 'swap' --aug_prob '0.1' > log.swap 2>&1 &
+
+
+AUG='replace'
+CUDA_VISIBLE_DEVICES=1 python -u train.py --train_path './data/diginetica_'$AUG'/train.txt' --config_path './data/diginetica_'$AUG'/config.txt' --model_path './model_'$AUG > log.$AUG 2>&1 &
+
+AUG='insert'
+CUDA_VISIBLE_DEVICES=2 python -u train.py --train_path './data/diginetica_'$AUG'/train.txt' --config_path './data/diginetica_'$AUG'/config.txt' --model_path './model_'$AUG > log.$AUG 2>&1 &
+
+AUG='delete'
+CUDA_VISIBLE_DEVICES=3 python -u train.py --train_path './data/diginetica_'$AUG'/train.txt' --config_path './data/diginetica_'$AUG'/config.txt' --model_path './model_'$AUG > log.$AUG 2>&1 &
+
+AUG='swap'
+CUDA_VISIBLE_DEVICES=0 python -u train.py --train_path './data/diginetica_'$AUG'/train.txt' --config_path './data/diginetica_'$AUG'/config.txt' --model_path './model_'$AUG > log.$AUG 2>&1 &
+
+
+
+AUG='replace'
+CUDA_VISIBLE_DEVICES=4 python -u infer.py --test_path './data/diginetica_'$AUG'/test.txt' --config_path './data/diginetica_'$AUG'/config.txt' --model_path './model_'$AUG > infer.$AUG 2>&1 &
+
+AUG='insert'
+CUDA_VISIBLE_DEVICES=5 python -u infer.py --test_path './data/diginetica_'$AUG'/test.txt' --config_path './data/diginetica_'$AUG'/config.txt' --model_path './model_'$AUG > infer.$AUG 2>&1 &
+
+AUG='delete'
+CUDA_VISIBLE_DEVICES=6 python -u infer.py --test_path './data/diginetica_'$AUG'/test.txt' --config_path './data/diginetica_'$AUG'/config.txt' --model_path './model_'$AUG > infer.$AUG 2>&1 &
+
+AUG='swap'
+CUDA_VISIBLE_DEVICES=7 python -u infer.py --test_path './data/diginetica_'$AUG'/test.txt' --config_path './data/diginetica_'$AUG'/config.txt' --model_path './model_'$AUG > infer.$AUG 2>&1 &
